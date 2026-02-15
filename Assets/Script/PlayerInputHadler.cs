@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -70,6 +71,11 @@ public class PlayerInputHadler : MonoBehaviour
         lookAction.performed += context => MoveInput = context.ReadValue<Vector2>();
         lookAction.canceled += context => MoveInput = Vector2.zero;
 
+        jumpAction.performed += context => JumpTriggered = true;
+        jumpAction.canceled += context => JumpTriggered = false;
+
+        sprintAction.performed += context => SprintValue = context.ReadValue<float>();
+        sprintAction.canceled += context => SprintValue = 0f; 
 
     }
 
