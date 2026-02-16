@@ -32,21 +32,28 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        shootFuckingRay();
+        MovePlayer();
     }
 
-    private void shootFuckingRay()
+    private void MovePlayer()
     {   
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            agent.SetDestination(getMouseWorldPosition());
+        }
+    }
+
+    private Vector3 getMouseWorldPosition()
+    {
         mouse_position = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mouse_position);
         if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, groundlayer))
         {
             Debug.Log("Hit: " + hit.point);
+            return hit.point;
         }
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            agent.SetDestination(hit.point);
-        }
+
+        return Vector3.zero;
     }
 
 
