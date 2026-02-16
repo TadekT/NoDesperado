@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 10, z: -8}
+  m_FollowOffset: {x: 0, y: 7.000001, z: -8}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -281,8 +281,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212535633}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4331887, y: 0.000000015375221, z: -0.0000000073897133, w: 0.9013033}
-  m_LocalPosition: {x: 0, y: 10, z: -8}
+  m_LocalRotation: {x: 0.3517267, y: -0.0000000161762, z: 0.000000006077968, w: 0.93610275}
+  m_LocalPosition: {x: 0, y: 7.000001, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -376,8 +376,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.43318874, y: 0.000000015375223, z: -0.0000000073897137, w: 0.90130323}
-  m_LocalPosition: {x: 0, y: 10, z: -8}
+  m_LocalRotation: {x: 0.35172677, y: -0.000000016176203, z: 0.000000006077968, w: 0.93610275}
+  m_LocalPosition: {x: 0, y: 7.000001, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -937,6 +937,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy1
       objectReference: {fileID: 0}
+    - target: {fileID: 3484672551802733971, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484672551802733971, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191708048573053832, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: debugSpehereRadius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6890702134599574188, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1005,10 +1020,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5000035300019833414, guid: 5d786f20e22b950489c98827a5ff9dad,
+    - target: {fileID: 149814450509844229, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
-      propertyPath: groundlayer.m_Bits
-      value: 8
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6654789670785708183, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
