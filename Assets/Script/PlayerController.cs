@@ -1,22 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Vector3 mouse_position;
 
-    [SerializeField] Vector3 mouse_position;
+    [SerializeField] private Vector3 mouse_world_position;
+    
+    [Header("References")]
+    [SerializeField] private NavMeshAgent agent;
+    
+    
+    [SerializeField] private LayerMask groundlayer;
 
-    [SerializeField] Vector3 mouse_world_position;
+    
+    
+    private void Awake()
+    {
+        if(agent == null)
+        {
+            agent = GetComponent<NavMeshAgent>();
+            Debug.Log("NavMeshAgent component not assigned, trying to get it from the GameObject.");
+        }
 
 
+
+    }
 
     void Update()
     {
-        mouse_position = Mouse.current.position.ReadValue();
-        mouse_world_position = Camera.main.ScreenToWorldPoint(mouse_position);
-        //Debug.Log("Mouse Position: " + mouse_position);
-        //Debug.Log("Mouse World Position: " + mouse_world_position); 
+        shootFuckingRay();
     }
-}
+
+    private void shootFuckingRay()
+    {   
+        mouse_position = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mouse_position);
+        if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, groundlayer))
+        {
+            Debug.Log("Hit: " + hit.point);
+        }
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            agent.SetDestination(hit.point);
+        }
+    }
+
+
+
+
+
+
+}   
