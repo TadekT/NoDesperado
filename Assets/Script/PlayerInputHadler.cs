@@ -22,14 +22,14 @@ public class PlayerInputHadler : MonoBehaviour
     [SerializeField] private string look = "Look";
     [SerializeField] private string jump = "Jump";
     [SerializeField] private string sprint = "Sprint";
-    //[SerializeField] private string point = "Point";
+    [SerializeField] private string point = "Point";
     //[SerializeField] private string click = "Click";
 
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
-    //private InputAction pointAction;
+    private InputAction pointAction;
     //private InputAction clickAction;
 
 
@@ -58,8 +58,11 @@ public class PlayerInputHadler : MonoBehaviour
     lookAction = playerControls.FindActionMap(actiomMapName).FindAction(look);
     jumpAction = playerControls.FindActionMap(actiomMapName).FindAction(jump);
     sprintAction = playerControls.FindActionMap(actiomMapName).FindAction(sprint);
-    //pointAction = playerControls.FindActionMap(actiomMapName).FindAction(point);
+    pointAction = playerControls.FindActionMap(actiomMapName).FindAction(point);
     //clickAction =playerControls.FindActionMap(actiomMapName).FindAction(click);
+
+    RegisterInputAction();
+
     }
 
     private void RegisterInputAction()
@@ -77,6 +80,9 @@ public class PlayerInputHadler : MonoBehaviour
         sprintAction.performed += context => SprintValue = context.ReadValue<float>();
         sprintAction.canceled += context => SprintValue = 0f; 
 
+        pointAction.performed += context => Debug.Log("Point action performed");
+        pointAction.canceled += context => Debug.Log("Point action canceled");
+
     }
 
 
@@ -86,7 +92,7 @@ public class PlayerInputHadler : MonoBehaviour
         lookAction.Enable();
         jumpAction.Enable();
         sprintAction.Enable();
-        //pointAction.Enable();
+        pointAction.Enable();
         //clickAction.Enable();
 
     }
@@ -97,7 +103,7 @@ public class PlayerInputHadler : MonoBehaviour
         jumpAction.Disable();
         moveAction.Disable();
         sprintAction.Disable();
-        //pointAction.Disable();
+        pointAction.Disable();
         //clickAction.Disable();
     }
 
