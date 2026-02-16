@@ -14,6 +14,7 @@ public class Enemy1Controller : MonoBehaviour
     private NavMeshAgent _agent;
     [SerializeField] private LayerMask playerLayer;
 
+    // private Coroutine playerInRangeCoroutine;
 
 
     [SerializeField] private float debugSpehereRadius;
@@ -25,6 +26,7 @@ public class Enemy1Controller : MonoBehaviour
             Debug.LogError("NavMeshAgent component not found on " + gameObject.name);
 
         }
+        // playerInRangeCoroutine = PlayerInRangeCoroutine();
         StartCoroutine(PlayerInRangeCoroutine());
 
     
