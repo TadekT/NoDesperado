@@ -1263,6 +1263,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1757466208922145690, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757466208922145690, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2594155934567998228}
+    - target: {fileID: 1757466208922145690, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1029669093}
+    - target: {fileID: 1757466208922145690, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1297332450}
+    - target: {fileID: 1757466208922145690, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 413637161}
     - target: {fileID: 3484672551802733971, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}
       propertyPath: m_Name
