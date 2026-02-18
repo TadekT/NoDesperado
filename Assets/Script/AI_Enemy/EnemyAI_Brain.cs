@@ -12,7 +12,7 @@ public class EnemyAI_Brain : MonoBehaviour
     Idle, Patrol, Search, Chase, Attack
 }
 
-private EnemyAI_Movment _Movment;
+[SerializeField]private EnemyAI_Movment _Movment;
 
 
 

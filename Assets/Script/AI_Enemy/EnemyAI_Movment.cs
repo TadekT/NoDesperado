@@ -91,6 +91,7 @@ public class EnemyAI_Movment : MonoBehaviour
         {
             HasReachedDestination = true;
             isMoving = false;
+            StartCoroutine(Idle());
         }
         else
         {
@@ -99,6 +100,15 @@ public class EnemyAI_Movment : MonoBehaviour
 
     }   
 
-
+    private void AgentStop()
+    {
+        _agent.isStopped = true;
+    }
+    private IEnumerator Idle()
+    {
+        
+        
+        yield return new WaitForSeconds(4f);
+    }
 
 }
