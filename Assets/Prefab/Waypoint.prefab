@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7762604358588536022}
   - component: {fileID: 4063771825642214233}
   - component: {fileID: 7663658319870739994}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Waypoint
   m_TagString: Waypoint
   m_Icon: {fileID: 0}
@@ -95,9 +95,9 @@ GameObject:
   - component: {fileID: 1088228418820751892}
   - component: {fileID: 1368355015176977306}
   - component: {fileID: 3473614895218683175}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LookAt
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,10 +7,16 @@ using UnityEngine;
 
 public class EnemyAI_Brain : MonoBehaviour
 {
-private enum State
+[SerializeField] private enum State
 {
     Idle, Patrol, Search, Chase, Attack
 }
+
+private EnemyAI_Movment _Movment;
+
+
+
+
 
 private State currentState;
 

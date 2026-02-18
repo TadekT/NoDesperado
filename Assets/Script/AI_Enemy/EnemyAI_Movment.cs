@@ -14,10 +14,11 @@ public class EnemyAI_Movment : MonoBehaviour
     [Header("Reference")]
     private NavMeshAgent _agent;
 
-
+    [Header("Transitions")]
+    [SerializeField] private bool isMoving = false;
+    [SerializeField] private bool HasReachedDestination;
     
     
-    //private bool isMoving = false;
     private int currentWaypointIndex = 0;
 
     private void Awake()
@@ -42,7 +43,15 @@ public class EnemyAI_Movment : MonoBehaviour
 
     private void Update()
     {
-     
+        if (!isMoving)
+        {
+            MoveToNextWaypoint();
+        }
+        else
+        {
+            CheckIfReachedDestination();
+        }
+
     }
 
     private void RotateTorwardsTarget()
@@ -60,9 +69,10 @@ public class EnemyAI_Movment : MonoBehaviour
             Debug.Log("No waypoints assigned. Cannot move.");
             return;
         }
+        RotateTorwardsTarget();
 
         _agent.SetDestination(waypoints[currentWaypointIndex].position);
-        RotateTorwardsTarget();
+        isMoving = true;
         if(currentWaypointIndex >= waypoints.Count - 1)
         {
             currentWaypointIndex = 0;
@@ -71,10 +81,23 @@ public class EnemyAI_Movment : MonoBehaviour
         {
             currentWaypointIndex ++;
         }
+
     }
 
     
+    private void CheckIfReachedDestination()
+    {
+        if(_agent.remainingDistance <= _agent.stoppingDistance)
+        {
+            HasReachedDestination = true;
+            isMoving = false;
+        }
+        else
+        {
+            HasReachedDestination = false;
+        }
 
+    }   
 
 
 
