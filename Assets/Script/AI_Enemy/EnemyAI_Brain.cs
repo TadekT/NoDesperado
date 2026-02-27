@@ -12,7 +12,7 @@ public class EnemyAI_Brain : MonoBehaviour
     Idle, Patrol, Search, Chase, Attack
 }
 
-[SerializeField]private EnemyAI_Movment _Movment;
+[SerializeField] private EnemyAI_Movment _movment;
 
 
 
@@ -20,10 +20,35 @@ public class EnemyAI_Brain : MonoBehaviour
 
 private State currentState;
 
-
+    private void Awake()
+    {
+        if(_movment == null)
+        {
+            _movment = GetComponent<EnemyAI_Movment>();
+        }
+    }
 
     private void Start()
     {
+        if(_movment == null)
+        {
+            this.enabled = false;
+            return;
+        }
+        
+    }
+
+
+    private void ChangeState(State next)
+    {
+        if(next == currentState) return;
+
+
+        currentState = next;
+        EntereState(currentState);
+    }
+    private void EntereState(State state)
+    {   
         
     }
 
