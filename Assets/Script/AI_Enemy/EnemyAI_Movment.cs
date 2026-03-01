@@ -14,8 +14,12 @@ public class EnemyAI_Movment : MonoBehaviour
     [Header("Reference")]
     private NavMeshAgent _agent;
 
+
+
+
     [Header("Transitions")]
     [SerializeField] private bool HasReachedDestination;
+    [SerializeField] private bool agentHasPath;
     
     
     private int currentWaypointIndex = 0;
@@ -29,7 +33,11 @@ public class EnemyAI_Movment : MonoBehaviour
             return;
         }
     }
+    private void Update()
+    {
+        agentHasPath = _agent.hasPath;
 
+    }
     public void MoveToNextWaypoint()
     {
         if (waypoints.Count == 0)
@@ -38,4 +46,8 @@ public class EnemyAI_Movment : MonoBehaviour
         _agent.SetDestination(waypoints[currentWaypointIndex].position);
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
     }
+
+    
+
+
 }

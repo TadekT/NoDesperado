@@ -35,6 +35,7 @@ private State currentState;
             this.enabled = false;
             return;
         }
+        ChangeState(State.Patrol);
         
     }
 
@@ -49,7 +50,12 @@ private State currentState;
     }
     private void EntereState(State state)
     {   
-        
+        switch(state)
+        {
+            case State.Patrol:
+                _movment.MoveToNextWaypoint();
+                break;
+        }
     }
 
 }
