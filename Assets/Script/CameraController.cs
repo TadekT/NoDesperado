@@ -62,11 +62,11 @@ public class CameraController : MonoBehaviour
     private void HandleRotation()
     {
         Vector3 rotationVector = new Vector3(0,0,0);
-        if(Input.GetKey(KeyCode.Q))
+        if(Input.GetKey(KeyCode.E))
         {
             rotationVector.y -= 1f;
         }
-        if(Input.GetKey(KeyCode.E))
+        if(Input.GetKey(KeyCode.Q))
         {
             rotationVector.y += 1f;
         }
