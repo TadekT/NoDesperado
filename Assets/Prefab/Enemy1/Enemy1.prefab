@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4211451960700989573}
   - component: {fileID: 1101542280810968612}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 1757363529664931178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.628, z: 0.444}
-  m_LocalScale: {x: 0.5442, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0.628, z: 0.513}
+  m_LocalScale: {x: 0.22683889, y: 0.08714686, z: 0.06805801}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6890702134599574188}
@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 7566227061686750914}
   - component: {fileID: 7306128240489289470}
   - component: {fileID: 1757466208922145690}
+  - component: {fileID: 1079906337851234722}
   - component: {fileID: 1710073144903579182}
   - component: {fileID: 7574612829108867715}
   - component: {fileID: 2513793567859823450}
@@ -182,8 +183,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  isMoving: 0
-  HasReachedDestination: 0
+  currentWaypointIndex: 0
+--- !u!114 &1079906337851234722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484672551802733971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad004a83519445409dbd5ac3ab139e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _eyes: {fileID: 7776042313819634881}
+  rayDistance: 20
 --- !u!23 &1710073144903579182
 MeshRenderer:
   m_ObjectHideFlags: 0

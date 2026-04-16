@@ -53,7 +53,7 @@ private State currentState;
         switch(state)
         {
             case State.Patrol:
-                _movment.MoveToNextWaypoint();
+                //_movment.MoveToNextWaypoint();
                 break;
         }
     }
