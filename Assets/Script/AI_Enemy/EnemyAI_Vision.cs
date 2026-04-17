@@ -12,19 +12,27 @@ public class EnemyAI_Vision : MonoBehaviour
 
 
     [Header("Sphere Cast arg")]
-    [SerializeField] private float sphereMaxDistance = 20f;
     [SerializeField] private float sphereRadius = 10f;
-    private List<Collider> detectedPlayerHits = new List<Collider>();
-
-
+    [SerializeField] private int maxColliderSize = 10;
+    [SerializeField] private float scanIntervl = 1f;
+    private Collider[] _hitColliders;
+    
     private Coroutine CheckingTheSurroundingsReference;
+
+
+    private void Awake()
+    {
+        _hitColliders = new Collider[maxColliderSize];
+    }
+
     private void Start()
     {
         if(_eyes == null)
         {
             Debug.Log("THER IS NO EYES TRANSFORM");
+            _eyes = transform;
         }   
-        StartCoroutine(CheckingTheSurroundings());
+        CheckingTheSurroundingsReference = StartCoroutine(CheckingTheSurroundings());
 
     }
 
@@ -32,23 +40,21 @@ public class EnemyAI_Vision : MonoBehaviour
 
     private IEnumerator CheckingTheSurroundings()
     {
-        SphereCheck();
-        yield return new WaitForSecondsRealtime(1f);
+        while (true)
+        {
+            SphereScan();
+            yield return new WaitForSecondsRealtime(1f);
+        }
     }
 
 
-    private  bool SphereCheck()
+    private  bool SphereScan()
     {
-        Vector3 startPos = transform.position;
-        Vector3 endPos = transform.position + transform.forward * sphereMaxDistance;
+
         
-        detectedPlayerHits.Clear();
-
-        RaycastHit hit;
-
-        bool playerWasHit = Physics.SphereCast(startPos, sphereRadius, transform.forward, out hit ,sphereMaxDistance, _playerLayer);
-
-        if (playerWasHit)
+        int scanColl = Physics.OverlapSphereNonAlloc(transform.position, sphereRadius ,_hitColliders,_playerLayer);
+        
+        if (scanColl > 0)
         {
             Debug.Log("Player IN SPHERE RANGE ");
             return true;
@@ -62,22 +68,11 @@ public class EnemyAI_Vision : MonoBehaviour
 
 
 
-    //     private void OnDrawGizmos()
-    // {
-    //     Vector3 start = transform.position;
-    //     Vector3 dir = transform.forward.normalized;
-    //     Vector3 end = start + dir * sphereMaxDistance;
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position,sphereRadius);
 
-    //     Gizmos.color = Color.cyan;
-
-    //     // kula startowa
-    //     Gizmos.DrawWireSphere(start, sphereRadius);
-
-    //     // kula końcowa
-    //     Gizmos.DrawWireSphere(end, sphereRadius);
-
-    //     // linia środka castu
-    //     Gizmos.DrawLine(start, end);
-    // }
+    }
 
 }

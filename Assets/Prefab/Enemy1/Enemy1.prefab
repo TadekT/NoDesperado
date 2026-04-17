@@ -200,7 +200,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _eyes: {fileID: 7776042313819634881}
-  rayDistance: 20
+  sphereRadius: 3
+  maxColliderSize: 10
+  scanIntervl: 1
 --- !u!23 &1710073144903579182
 MeshRenderer:
   m_ObjectHideFlags: 0
