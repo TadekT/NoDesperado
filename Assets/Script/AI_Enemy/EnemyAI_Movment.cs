@@ -29,11 +29,7 @@ public class EnemyAI_Movment : MonoBehaviour
             return;
         }
     }
-    private void Update()
-    {
-        
-
-    }
+    
     public void MoveToNextWaypoint()
     {
         if (waypoints.Count == 0)

@@ -202,7 +202,8 @@ MonoBehaviour:
   _eyes: {fileID: 7776042313819634881}
   sphereRadius: 3
   maxColliderSize: 10
-  scanIntervl: 1
+  scanIntervl: 0.5
+  scanColl: 0
 --- !u!23 &1710073144903579182
 MeshRenderer:
   m_ObjectHideFlags: 0

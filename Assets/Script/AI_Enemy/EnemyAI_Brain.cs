@@ -12,8 +12,8 @@ public class EnemyAI_Brain : MonoBehaviour
     Idle, Patrol, Search, Chase, Attack
 }
 
-[SerializeField] private EnemyAI_Movment _movment;
-
+[SerializeField] private EnemyAI_Movment _enemyMovment;
+[SerializeField] private EnemyAI_Vision _enemyVision;
 
 
 
@@ -22,15 +22,19 @@ private State currentState;
 
     private void Awake()
     {
-        if(_movment == null)
+        if(_enemyMovment == null)
         {
-            _movment = GetComponent<EnemyAI_Movment>();
+            _enemyMovment = GetComponent<EnemyAI_Movment>();
+        }
+                if(_enemyVision == null)
+        {
+            _enemyVision = GetComponent<EnemyAI_Vision>();
         }
     }
 
     private void Start()
     {
-        if(_movment == null)
+        if(_enemyMovment == null)
         {
             this.enabled = false;
             return;
@@ -53,7 +57,7 @@ private State currentState;
         switch(state)
         {
             case State.Patrol:
-                //_movment.MoveToNextWaypoint();
+                //_enemyMovment.MoveToNextWaypoint();
                 break;
         }
     }

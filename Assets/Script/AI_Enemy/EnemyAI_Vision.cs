@@ -14,7 +14,8 @@ public class EnemyAI_Vision : MonoBehaviour
     [Header("Sphere Cast arg")]
     [SerializeField] private float sphereRadius = 10f;
     [SerializeField] private int maxColliderSize = 10;
-    [SerializeField] private float scanIntervl = 1f;
+    [SerializeField] private float scanInterval = 1f;
+    [SerializeField] int scanColl;
     private Collider[] _hitColliders;
     
     private Coroutine CheckingTheSurroundingsReference;
@@ -43,16 +44,16 @@ public class EnemyAI_Vision : MonoBehaviour
         while (true)
         {
             SphereScan();
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(scanInterval);
         }
     }
 
 
     private  bool SphereScan()
     {
-
+        Physics.SyncTransforms();
         
-        int scanColl = Physics.OverlapSphereNonAlloc(transform.position, sphereRadius ,_hitColliders,_playerLayer);
+        scanColl = Physics.OverlapSphereNonAlloc(transform.position, sphereRadius ,_hitColliders,_playerLayer);
         
         if (scanColl > 0)
         {
