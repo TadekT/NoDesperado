@@ -9,7 +9,7 @@ public class EnemyAI_Brain : MonoBehaviour
 {
 [SerializeField] private enum State
 {
-    Idle, Patrol, Search, Chase, Attack
+    Idle, Patrol, Chase, Attack, Search
 }
 
 [SerializeField] private EnemyAI_Movment _enemyMovment;
@@ -26,7 +26,7 @@ private State currentState;
         {
             _enemyMovment = GetComponent<EnemyAI_Movment>();
         }
-                if(_enemyVision == null)
+        if(_enemyVision == null)
         {
             _enemyVision = GetComponent<EnemyAI_Vision>();
         }
@@ -56,8 +56,9 @@ private State currentState;
     {   
         switch(state)
         {
+            
             case State.Patrol:
-                //_enemyMovment.MoveToNextWaypoint();
+                _enemyMovment.MoveToNextWaypoint();
                 break;
         }
     }

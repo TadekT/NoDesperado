@@ -165,7 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322218b9aae1617409a48bdac589cb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movment: {fileID: 0}
+  _enemyMovment: {fileID: 1757466208922145690}
+  _enemyVision: {fileID: 1079906337851234722}
 --- !u!114 &1757466208922145690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +203,7 @@ MonoBehaviour:
   _eyes: {fileID: 7776042313819634881}
   sphereRadius: 3
   maxColliderSize: 10
-  scanIntervl: 0.5
+  scanInterval: 1
   scanColl: 0
 --- !u!23 &1710073144903579182
 MeshRenderer:
