@@ -1,9 +1,14 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class EnemyAI_Movment : MonoBehaviour
-{
+{   
+
+    public event Action OnIdleFinished;
+
     [Header("Waypoints")]
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     
@@ -12,17 +17,24 @@ public class EnemyAI_Movment : MonoBehaviour
     private NavMeshAgent _agent;
 
 
-
-
     [Header("Transitions")]
-
+    [SerializeField] private float idleTimeInterval = 2f;
+    [SerializeField] private float waypointReachedThreshold = 0.15f;
     
     [SerializeField] private int currentWaypointIndex = 0;
+
+
+    [Header("Courutine reference")]
+    private Coroutine IdleCoroutineReference;
     
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+    }
 
     private void Start()
     {
-        _agent = GetComponent<NavMeshAgent>();
         if(waypoints.Count == 0)
         {
             Debug.LogError("No waypoints assigned to the enemy.");
@@ -32,12 +44,57 @@ public class EnemyAI_Movment : MonoBehaviour
     
     public void MoveToNextWaypoint()
     {
-        if (waypoints.Count == 0)
+        if (waypoints.Count == 0) 
+            return;
+        if(_agent == null)
             return;
 
         _agent.SetDestination(waypoints[currentWaypointIndex].position);
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
     }
+    
+    public bool HasReachedWaypoint()
+    {
+        if(_agent == null)
+            return false;
+        
+        if (_agent.pathPending)
+            return false;
+
+        if (_agent.remainingDistance > _agent.stoppingDistance + waypointReachedThreshold)
+            return false;
+
+        return !_agent.hasPath || _agent.velocity.sqrMagnitude <= 0.01f;
+    }
+
+    private IEnumerator Idle()
+    {
+       yield return new WaitForSecondsRealtime(idleTimeInterval);
+       IdleCoroutineReference = null;
+       OnIdleFinished?.Invoke();
+    }
+
+    public void IdleStart()
+    {
+        if(IdleCoroutineReference != null)
+            return;
+
+        IdleCoroutineReference = StartCoroutine(Idle());
+        Debug.Log("Start Idle ");
+    }
+
+    public void IdleStop()
+    {
+        if(IdleCoroutineReference == null)
+            return;
+
+        StopCoroutine(IdleCoroutineReference);
+        IdleCoroutineReference = null;
+        Debug.Log("Stop Idle ");
+        
+    }
+    
+
 
 
 // czy mob dotarł do waypontia / celu

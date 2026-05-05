@@ -22,15 +22,32 @@ private State currentState;
 
     private void Awake()
     {
+
         if(_enemyMovment == null)
         {
             _enemyMovment = GetComponent<EnemyAI_Movment>();
         }
+        
         if(_enemyVision == null)
         {
             _enemyVision = GetComponent<EnemyAI_Vision>();
         }
+
+        if(_enemyMovment != null)
+        {
+            _enemyMovment.OnIdleFinished += HandleIdleFinished;
+        }
     }
+
+    private void OnDestroy()
+    {
+        if(_enemyMovment != null)
+        {
+            _enemyMovment.OnIdleFinished -= HandleIdleFinished;
+        }       
+    }
+
+
 
     private void Start()
     {
@@ -41,6 +58,17 @@ private State currentState;
         }
         ChangeState(State.Patrol);
         
+    }
+
+    private void Update()
+    {
+        if (_enemyMovment == null)
+            return;
+
+        if (currentState == State.Patrol && _enemyMovment.HasReachedWaypoint())
+        {
+            ChangeState(State.Idle);
+        }
     }
 
 
@@ -60,6 +88,17 @@ private State currentState;
             case State.Patrol:
                 _enemyMovment.MoveToNextWaypoint();
                 break;
+            case State.Idle:
+                _enemyMovment.IdleStart();
+                break;
+        }
+    }
+
+    private void HandleIdleFinished()
+    {
+        if(currentState == State.Idle)
+        {
+            ChangeState(State.Patrol);
         }
     }
 
