@@ -74,10 +74,13 @@ private State currentState;
 
     private void ChangeState(State next)
     {
-        if(next == currentState) return;
+        if(next == currentState) 
+            return;
 
+        ExitState(currentState);
 
         currentState = next;
+        
         EntereState(currentState);
     }
     private void EntereState(State state)
@@ -93,7 +96,15 @@ private State currentState;
                 break;
         }
     }
-
+    private void ExitState(State state)
+    {
+        switch(state)
+        {
+            case State.Idle:
+                _enemyMovment.IdleStop();
+                break;
+        }
+    }
     private void HandleIdleFinished()
     {
         if(currentState == State.Idle)
