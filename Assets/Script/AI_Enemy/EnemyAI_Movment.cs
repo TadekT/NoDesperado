@@ -67,10 +67,10 @@ public class EnemyAI_Movment : MonoBehaviour
         return !_agent.hasPath || _agent.velocity.sqrMagnitude <= 0.01f;
     }
 
+#region idle
     private IEnumerator Idle()
     {
        yield return new WaitForSecondsRealtime(idleTimeInterval);
-       IdleCoroutineReference = null;
        OnIdleFinished?.Invoke();
     }
 
@@ -93,14 +93,7 @@ public class EnemyAI_Movment : MonoBehaviour
         Debug.Log("Stop Idle ");
         
     }
-    
-
-
-
-// czy mob dotarł do waypontia / celu
-// jeśli tak to wyznaczyć następny, jeśli nie to return
-
-    
+#endregion    
 
 
 }
