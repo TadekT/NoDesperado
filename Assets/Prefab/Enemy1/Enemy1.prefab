@@ -184,6 +184,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  idleTimeInterval: 2
+  waypointReachedThreshold: 0.15
   currentWaypointIndex: 0
 --- !u!114 &1079906337851234722
 MonoBehaviour:
@@ -200,10 +202,13 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _playerTransform: {fileID: 0}
   _eyes: {fileID: 7776042313819634881}
-  sphereRadius: 3
+  viewAngle: 60
+  viewDistance: 10
+  sphereRadius: 10
   maxColliderSize: 10
-  scanInterval: 1
+  scanInterval: 0.5
   scanColl: 0
 --- !u!23 &1710073144903579182
 MeshRenderer:
