@@ -12,7 +12,7 @@ public class EnemyAI_Vision : MonoBehaviour
 
     [Header("Field of View")]
     [SerializeField] private float viewAngle = 60f; 
-    [SerializeField] private float viewDistance = 10f;
+    
 
 
     [Header("Sphere Cast arg")]
