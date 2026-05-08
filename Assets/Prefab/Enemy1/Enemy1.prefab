@@ -207,7 +207,6 @@ MonoBehaviour:
   _playerTransform: {fileID: 0}
   _eyes: {fileID: 7776042313819634881}
   viewAngle: 60
-  viewDistance: 10
   sphereRadius: 10
   maxColliderSize: 10
   scanInterval: 0.5
@@ -397,8 +396,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1984917396381428340, guid: 62ab894bad630364fb44acbe22dac496,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 4477016737330826218}
   m_SourcePrefab: {fileID: 100100000, guid: 62ab894bad630364fb44acbe22dac496, type: 3}
+--- !u!1 &3353516436468549392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1984917396381428340, guid: 62ab894bad630364fb44acbe22dac496,
+    type: 3}
+  m_PrefabInstance: {fileID: 3819548039885532516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4477016737330826218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353516436468549392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74343c657f34bdd47a517a5e69d27c9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerInFovActionSigal: {fileID: 1079906337851234722}
 --- !u!4 &4549778101963979217 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 731216633296802997, guid: 62ab894bad630364fb44acbe22dac496,

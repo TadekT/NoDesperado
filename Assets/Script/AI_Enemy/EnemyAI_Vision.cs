@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI_Vision : MonoBehaviour
 {
+
+    public event Action OnPlayerInFovAction;
+
 
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private Transform _playerTransform;
@@ -96,6 +100,7 @@ public class EnemyAI_Vision : MonoBehaviour
                 if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
                     Debug.Log("Player in FOV");
+                    QuestionMarkPlayerVisableInFov();
                     return true;
                 }
             }
@@ -105,7 +110,11 @@ public class EnemyAI_Vision : MonoBehaviour
         return false;
     }
 
-
+    private void QuestionMarkPlayerVisableInFov()
+    {
+        Debug.Log("Player in FOV signal");
+        OnPlayerInFovAction?.Invoke();
+    }
 
     private void OnDrawGizmos()
     {
