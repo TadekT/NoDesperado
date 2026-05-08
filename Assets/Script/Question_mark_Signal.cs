@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Question_mark_Signal : MonoBehaviour
 {
-    [SerializeField] private EnemyAI_Vision PlayerInFovActionSigal;
-
+    [SerializeField] private EnemyAI_Vision EnemyAI_Vision;
     [SerializeField] private MeshRenderer meshRenderer;
+
+    private AudioSource audioSource;
+
+    //bools variable
+    private bool hasPlayedSuspiceSound = false;
 
     private void Awake()
     {
@@ -14,17 +18,29 @@ public class Question_mark_Signal : MonoBehaviour
         {
             meshRenderer =  GetComponent<MeshRenderer>();
         }
+        if(EnemyAI_Vision == null)
+        {
+            EnemyAI_Vision = GetComponent<EnemyAI_Vision>();
+        }
+        audioSource = GetComponent<AudioSource>();
+
         meshRenderer.enabled = false;
     }
 
     private void OnEnable()
     {
-        PlayerInFovActionSigal.OnPlayerInFovAction += ShowQuestionMark;
+        if(EnemyAI_Vision != null)
+        {
+            EnemyAI_Vision.OnPlayerInFovAction += ShowQuestionMark;
+        }
     }
 
     private void OnDisable()
     {
-        PlayerInFovActionSigal.OnPlayerInFovAction -= ShowQuestionMark;
+        if(EnemyAI_Vision != null)
+        {
+            EnemyAI_Vision.OnPlayerInFovAction -= ShowQuestionMark;
+        }
     }
 
     private void ShowQuestionMark()
@@ -32,6 +48,16 @@ public class Question_mark_Signal : MonoBehaviour
         Debug.Log("Pokazuje pytajnik");
         meshRenderer.enabled = true;
 
+        if (!hasPlayedSuspiceSound)
+        {
+            PlaySuspiceSound();
+        }
+
+    }
+
+    private void PlaySuspiceSound()
+    {
+        audioSource.PlayOneShot(audioSource.clip);
     }
 
 }

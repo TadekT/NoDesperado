@@ -28,6 +28,8 @@ public class EnemyAI_Vision : MonoBehaviour
     
     private Coroutine CheckingTheSurroundingsReference;
 
+    // bool variables
+    private bool _playerInFov;
 
     private void Awake()
     {
@@ -62,7 +64,7 @@ public class EnemyAI_Vision : MonoBehaviour
         }
     }
     
-
+#region Sphere Scan 
     private  bool SphereScan()
     {
         Physics.SyncTransforms();
@@ -81,7 +83,10 @@ public class EnemyAI_Vision : MonoBehaviour
             return false;
         }
     }
+#endregion
 
+
+#region Cone Scan 
     private bool ConeScan()
     {
         
@@ -95,27 +100,34 @@ public class EnemyAI_Vision : MonoBehaviour
         {
             RaycastHit hit;
 
-            if(Physics.Raycast(_eyes.transform.position, directionToTarget, out hit, distanceToTarget))
+            if(Physics.Raycast(_eyes.transform.position, directionToTarget, out hit, distanceToTarget,_playerLayer))
             {
-                if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
-                {
-                    Debug.Log("Player in FOV");
-                    QuestionMarkPlayerVisableInFov();
-                    return true;
-                }
+                    if (!_playerInFov)
+                    {
+                        Debug.Log("Player in FOV");
+                        _playerInFov = true;
+                        QuestionMarkPlayerVisableInFov();
+                        return true;
+                    }
+            _playerInFov = false;
+            return false;
             }
         }
 
         Debug.Log("No player in FOV");
         return false;
     }
+#endregion
 
+#region Question Mar invoke funcion
     private void QuestionMarkPlayerVisableInFov()
     {
         Debug.Log("Player in FOV signal");
         OnPlayerInFovAction?.Invoke();
     }
+#endregion
 
+#region OnDrawGizmos
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -132,5 +144,7 @@ public class EnemyAI_Vision : MonoBehaviour
         Gizmos.DrawLine(transform.position + rightBoundary, transform.position + leftBoundary);
 
     }
+#endregion
+
 
 }

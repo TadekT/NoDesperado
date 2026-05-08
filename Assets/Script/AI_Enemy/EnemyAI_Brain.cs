@@ -9,7 +9,7 @@ public class EnemyAI_Brain : MonoBehaviour
 {
 [SerializeField] private enum State
 {
-    Idle, Patrol, Chase, Attack, Search
+    Idle, Patrol, Suspice, Chase, Attack, Search
 }
 
 [SerializeField] private EnemyAI_Movment _enemyMovment;
@@ -28,15 +28,21 @@ private State currentState;
             _enemyMovment = GetComponent<EnemyAI_Movment>();
         }
         
+        if(_enemyMovment != null)
+        {
+            _enemyMovment.OnIdleFinished += HandleIdleFinished;
+        }
+
         if(_enemyVision == null)
         {
             _enemyVision = GetComponent<EnemyAI_Vision>();
         }
 
-        if(_enemyMovment != null)
+        if(_enemyVision != null)
         {
-            _enemyMovment.OnIdleFinished += HandleIdleFinished;
+            _enemyVision.OnPlayerInFovAction += HandlePlayerInFOV;
         }
+
     }
 
     private void OnDestroy()
@@ -44,6 +50,11 @@ private State currentState;
         if(_enemyMovment != null)
         {
             _enemyMovment.OnIdleFinished -= HandleIdleFinished;
+        }
+
+        if(_enemyVision != null)
+        {
+            _enemyVision.OnPlayerInFovAction -= HandlePlayerInFOV;
         }       
     }
 
@@ -88,11 +99,14 @@ private State currentState;
         switch(state)
         {
             
+            case State.Idle:
+                _enemyMovment.IdleStart();
+                break;
             case State.Patrol:
                 _enemyMovment.MoveToNextWaypoint();
                 break;
-            case State.Idle:
-                _enemyMovment.IdleStart();
+            case State.Suspice:
+                    
                 break;
         }
     }
@@ -110,6 +124,14 @@ private State currentState;
         if(currentState == State.Idle)
         {
             ChangeState(State.Patrol);
+        }
+    }
+
+    private void HandlePlayerInFOV()
+    {
+        if(currentState != State.Suspice)
+        {
+            ChangeState(State.Suspice);
         }
     }
 
