@@ -6,7 +6,8 @@ using UnityEngine;
 public class EnemyAI_Vision : MonoBehaviour
 {
 
-    public event Action OnPlayerInFovAction;
+    public event Action OnPlayerEnteredFOV;
+    public event Action OnPlayerExitedFOV;
 
 
     [SerializeField] private LayerMask playerLayerMask;
@@ -29,8 +30,13 @@ public class EnemyAI_Vision : MonoBehaviour
     private Coroutine CheckingTheSurroundingsReference;
 
     // bool variables
-    public bool IsPlayerInFieldOfView;
-    public bool IsPlayerOutOfFieldOfView;
+    public bool _isPlayerInFieldOfView = false;
+
+
+
+
+    public bool IsPlayerInFieldOfView => _isPlayerInFieldOfView;
+
 
     private void Awake()
     {
@@ -73,12 +79,13 @@ public class EnemyAI_Vision : MonoBehaviour
         
         if (detectedCollidersCount > 0)
         {
-            ConeScan();
+            FieldOfViewScan();
             Debug.Log("Player IN SPHERE RANGE ");
             return true;
         }
         else
-        {
+        {   
+            SetPlayerOutOfFOV();
             Debug.Log("Sphere find shiit ");
             return false;
         }
@@ -87,48 +94,56 @@ public class EnemyAI_Vision : MonoBehaviour
 
 
 #region Cone Scan 
-    private bool ConeScan()
+    private bool FieldOfViewScan()
     {
         
         Vector3 directionToTarget = (playerTransform.position - transform.position).normalized;
-        float distanceToTarget = Vector3.Distance(transform.position,playerTransform.position);
-        
-        if(distanceToTarget > sphereRadius) return false;
+
+        float distanceToTarget = Vector3.Distance(transform.position,playerTransform.position);  
+
+        if(distanceToTarget > sphereRadius)
+        {
+            SetPlayerOutOfFOV();
+            return false;
+        } 
 
         float angleToTarget = Vector3.Angle(eyes.transform.forward,directionToTarget);
+
         if(angleToTarget < viewAngle / 2f)
         {
             RaycastHit hit;
-
             if(Physics.Raycast(eyes.transform.position, directionToTarget, out hit, distanceToTarget,playerLayerMask))
             {
-                    if (!IsPlayerInFieldOfView)
-                    {
-                        Debug.Log("Player in FOV");
-                        IsPlayerInFieldOfView = true;
-                        OnPlayerEnteredFOV();
-                        return true;
-                    }
-            
-            IsPlayerInFieldOfView = false;
-            return false;
+                SetPlayerInFOV();
+                return true;
             }
         }
 
-        Debug.Log("No player in FOV");
+        SetPlayerOutOfFOV();        
         return false;
     }
 #endregion
 
+ 
 
 #region 
-    private void OnPlayerEnteredFOV()
+    private void SetPlayerInFOV()
     {
-        Debug.Log("Player in  Field Of View signal");
-        OnPlayerInFovAction?.Invoke();
+        if(!_isPlayerInFieldOfView)
+        {
+            _isPlayerInFieldOfView = true;
+            OnPlayerEnteredFOV?.Invoke();
+        }
     }
 
-
+    private void SetPlayerOutOfFOV()
+    {
+        if(_isPlayerInFieldOfView)
+        {
+            _isPlayerInFieldOfView = false;
+            OnPlayerExitedFOV?.Invoke();
+        }
+    }
 
 
 

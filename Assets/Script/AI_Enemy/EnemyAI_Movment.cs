@@ -42,7 +42,7 @@ public class EnemyAI_Movment : MonoBehaviour
         }
     }
     
-    public void MoveToNextWaypoint()
+    public void PatrolState()
     {
         if (waypoints.Count == 0) 
             return;
@@ -68,7 +68,7 @@ public class EnemyAI_Movment : MonoBehaviour
     }
 
 #region idle
-    private IEnumerator Idle()
+    private IEnumerator IdleState()
     {
        yield return new WaitForSecondsRealtime(idleTimeInterval);
        OnIdleFinished?.Invoke();
@@ -79,7 +79,7 @@ public class EnemyAI_Movment : MonoBehaviour
         if(IdleCoroutineReference != null)
             return;
 
-        IdleCoroutineReference = StartCoroutine(Idle());
+        IdleCoroutineReference = StartCoroutine(IdleState());
         Debug.Log("Start Idle ");
     }
 
@@ -95,5 +95,16 @@ public class EnemyAI_Movment : MonoBehaviour
     }
 #endregion    
 
+    public void SuspiceState()
+    {
+        _agent.isStopped = true;
+    
+
+    }
+
+    private void FollowPlayerMovment()
+    {
+
+    }
 
 }

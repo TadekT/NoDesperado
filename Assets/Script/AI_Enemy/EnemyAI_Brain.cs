@@ -28,33 +28,39 @@ private State currentState;
             _enemyMovment = GetComponent<EnemyAI_Movment>();
         }
         
-        if(_enemyMovment != null)
-        {
-            _enemyMovment.OnIdleFinished += HandleIdleFinished;
-        }
 
         if(_enemyVision == null)
         {
             _enemyVision = GetComponent<EnemyAI_Vision>();
         }
 
-        if(_enemyVision != null)
-        {
-            _enemyVision.OnPlayerInFovAction += HandlePlayerInFOV;
-        }
-
     }
 
-    private void OnDestroy()
+    private void OnEnable()
+    {
+       if(_enemyMovment != null)
+        {
+            _enemyMovment.OnIdleFinished += HandleIdleFinished;
+        }
+        if(_enemyVision != null)
+        {
+            _enemyVision.OnPlayerEnteredFOV += HandlePlayerInFOV;
+            _enemyVision.OnPlayerExitedFOV +=  HandlePlayerOutFOV;
+        }
+    }
+
+    private void OnDisable()
     {
         if(_enemyMovment != null)
         {
             _enemyMovment.OnIdleFinished -= HandleIdleFinished;
+            
         }
 
         if(_enemyVision != null)
         {
-            _enemyVision.OnPlayerInFovAction -= HandlePlayerInFOV;
+            _enemyVision.OnPlayerEnteredFOV -= HandlePlayerInFOV;
+            _enemyVision.OnPlayerExitedFOV -=  HandlePlayerOutFOV;
         }       
     }
 
@@ -70,6 +76,7 @@ private State currentState;
         ChangeState(State.Patrol);
         
     }
+
 
     private void Update()
     {
@@ -94,6 +101,8 @@ private State currentState;
         
         EntereState(currentState);
     }
+
+
     private void EntereState(State state)
     {   
         switch(state)
@@ -103,13 +112,15 @@ private State currentState;
                 _enemyMovment.IdleStart();
                 break;
             case State.Patrol:
-                _enemyMovment.MoveToNextWaypoint();
+                _enemyMovment.PatrolState();
                 break;
             case State.Suspice:
-                    
+                _enemyMovment.SuspiceState();
                 break;
         }
     }
+
+
     private void ExitState(State state)
     {
         switch(state)
@@ -119,6 +130,8 @@ private State currentState;
                 break;
         }
     }
+
+
     private void HandleIdleFinished()
     {
         if(currentState == State.Idle)
@@ -127,11 +140,20 @@ private State currentState;
         }
     }
 
+
     private void HandlePlayerInFOV()
     {
         if(currentState != State.Suspice)
         {
             ChangeState(State.Suspice);
+        }
+    }
+
+    private void HandlePlayerOutFOV()
+    {
+        if(currentState == State.Suspice)
+        {
+            ChangeState(State.Patrol);
         }
     }
 

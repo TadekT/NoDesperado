@@ -31,7 +31,8 @@ public class Question_mark_Signal : MonoBehaviour
     {
         if(EnemyAI_Vision != null)
         {
-            EnemyAI_Vision.OnPlayerInFovAction += ShowQuestionMark;
+            EnemyAI_Vision.OnPlayerEnteredFOV += ShowQuestionMark;
+            EnemyAI_Vision.OnPlayerExitedFOV += HideQuestionMark;
         }
     }
 
@@ -39,7 +40,8 @@ public class Question_mark_Signal : MonoBehaviour
     {
         if(EnemyAI_Vision != null)
         {
-            EnemyAI_Vision.OnPlayerInFovAction -= ShowQuestionMark;
+            EnemyAI_Vision.OnPlayerEnteredFOV -= ShowQuestionMark;
+            EnemyAI_Vision.OnPlayerExitedFOV -= HideQuestionMark;
         }
     }
 
@@ -53,6 +55,13 @@ public class Question_mark_Signal : MonoBehaviour
             hasPlayedSuspiceSound = true;
         }
 
+    }
+
+
+    private void HideQuestionMark()
+    {
+        meshRenderer.enabled = false;
+        hasPlayedSuspiceSound = false;
     }
 
     private void PlaySuspiceSound()
