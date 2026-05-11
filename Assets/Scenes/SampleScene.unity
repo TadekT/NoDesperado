@@ -2076,6 +2076,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1079906337851234722, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: viewAngle
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 1757466208922145690, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}
       propertyPath: waypoints.Array.data[0]

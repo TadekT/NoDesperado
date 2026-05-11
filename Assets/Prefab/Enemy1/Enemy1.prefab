@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 6890702134599574188}
   - component: {fileID: 7566227061686750914}
   - component: {fileID: 7306128240489289470}
-  - component: {fileID: 1757466208922145690}
+  - component: {fileID: 7928188875767749447}
   - component: {fileID: 1079906337851234722}
   - component: {fileID: 1710073144903579182}
   - component: {fileID: 7574612829108867715}
@@ -167,9 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322218b9aae1617409a48bdac589cb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyMovment: {fileID: 1757466208922145690}
+  currentState: 0
+  _enemyMovement: {fileID: 7928188875767749447}
   _enemyVision: {fileID: 1079906337851234722}
---- !u!114 &1757466208922145690
+--- !u!114 &7928188875767749447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,11 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a5fc8c012a33c48b5c98d7671f8251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  waypoints: []
   idleTimeInterval: 2
   waypointReachedThreshold: 0.15
   currentWaypointIndex: 0
@@ -211,8 +208,7 @@ MonoBehaviour:
   maxColliderSize: 10
   scanInterval: 0.5
   detectedCollidersCount: 0
-  IsPlayerInFieldOfView: 0
-  IsPlayerOutOfFieldOfView: 0
+  _isPlayerInFieldOfView: 0
 --- !u!23 &1710073144903579182
 MeshRenderer:
   m_ObjectHideFlags: 0

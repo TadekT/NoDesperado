@@ -7,25 +7,23 @@ using UnityEngine;
 
 public class EnemyAI_Brain : MonoBehaviour
 {
-[SerializeField] private enum State
+private enum State
 {
-    Idle, Patrol, Suspice, Chase, Attack, Search
+    None, Idle, Patrol, Suspicious, Chase, Attack, Search
 }
-
-[SerializeField] private EnemyAI_Movment _enemyMovment;
+[SerializeField] private State currentState = State.None;
+[SerializeField] private EnemyAI_Movement _enemyMovement;
 [SerializeField] private EnemyAI_Vision _enemyVision;
 
 
 
 
-private State currentState;
-
     private void Awake()
     {
 
-        if(_enemyMovment == null)
+        if(_enemyMovement == null)
         {
-            _enemyMovment = GetComponent<EnemyAI_Movment>();
+            _enemyMovement = GetComponent<EnemyAI_Movement>();
         }
         
 
@@ -38,9 +36,9 @@ private State currentState;
 
     private void OnEnable()
     {
-       if(_enemyMovment != null)
+       if(_enemyMovement != null)
         {
-            _enemyMovment.OnIdleFinished += HandleIdleFinished;
+            _enemyMovement.OnIdleFinished += HandleIdleFinished;
         }
         if(_enemyVision != null)
         {
@@ -51,9 +49,9 @@ private State currentState;
 
     private void OnDisable()
     {
-        if(_enemyMovment != null)
+        if(_enemyMovement != null)
         {
-            _enemyMovment.OnIdleFinished -= HandleIdleFinished;
+            _enemyMovement.OnIdleFinished -= HandleIdleFinished;
             
         }
 
@@ -68,7 +66,7 @@ private State currentState;
 
     private void Start()
     {
-        if(_enemyMovment == null)
+        if(_enemyMovement == null)
         {
             this.enabled = false;
             return;
@@ -80,10 +78,10 @@ private State currentState;
 
     private void Update()
     {
-        if (_enemyMovment == null)
+        if (_enemyMovement == null)
             return;
 
-        if (currentState == State.Patrol && _enemyMovment.HasReachedWaypoint())
+        if (currentState == State.Patrol && _enemyMovement.HasReachedWaypoint())
         {
             ChangeState(State.Idle);
         }
@@ -109,13 +107,13 @@ private State currentState;
         {
             
             case State.Idle:
-                _enemyMovment.IdleStart();
+                _enemyMovement.IdleStart();
                 break;
             case State.Patrol:
-                _enemyMovment.PatrolState();
+                _enemyMovement.PatrolState();
                 break;
-            case State.Suspice:
-                _enemyMovment.SuspiceState();
+            case State.Suspicious:
+                _enemyMovement.SuspiciousState();
                 break;
         }
     }
@@ -126,7 +124,7 @@ private State currentState;
         switch(state)
         {
             case State.Idle:
-                _enemyMovment.IdleStop();
+                _enemyMovement.IdleStop();
                 break;
         }
     }
@@ -143,15 +141,15 @@ private State currentState;
 
     private void HandlePlayerInFOV()
     {
-        if(currentState != State.Suspice)
+        if(currentState != State.Suspicious)
         {
-            ChangeState(State.Suspice);
+            ChangeState(State.Suspicious);
         }
     }
 
     private void HandlePlayerOutFOV()
     {
-        if(currentState == State.Suspice)
+        if(currentState == State.Suspicious)
         {
             ChangeState(State.Patrol);
         }

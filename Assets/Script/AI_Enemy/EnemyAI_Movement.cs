@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-public class EnemyAI_Movment : MonoBehaviour
+public class EnemyAI_Movement : MonoBehaviour
 {   
 
     public event Action OnIdleFinished;
@@ -48,6 +48,8 @@ public class EnemyAI_Movment : MonoBehaviour
             return;
         if(_agent == null)
             return;
+
+        _agent.isStopped = false;
 
         _agent.SetDestination(waypoints[currentWaypointIndex].position);
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
@@ -95,14 +97,14 @@ public class EnemyAI_Movment : MonoBehaviour
     }
 #endregion    
 
-    public void SuspiceState()
+    public void SuspiciousState()
     {
         _agent.isStopped = true;
     
 
     }
 
-    private void FollowPlayerMovment()
+    private void FollowPlayerMovement()
     {
 
     }
