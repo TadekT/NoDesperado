@@ -11,7 +11,7 @@ public class Question_mark_Signal : MonoBehaviour
 
     //bools variable
     private bool hasPlayedSuspiceSound = false;
-
+    
     private void Awake()
     {
         if(meshRenderer == null)
@@ -47,10 +47,10 @@ public class Question_mark_Signal : MonoBehaviour
     {
         Debug.Log("Pokazuje pytajnik");
         meshRenderer.enabled = true;
-
         if (!hasPlayedSuspiceSound)
         {
             PlaySuspiceSound();
+            hasPlayedSuspiceSound = true;
         }
 
     }

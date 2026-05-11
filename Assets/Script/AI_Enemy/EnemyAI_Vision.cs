@@ -9,9 +9,9 @@ public class EnemyAI_Vision : MonoBehaviour
     public event Action OnPlayerInFovAction;
 
 
-    [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private Transform _playerTransform;
-    [SerializeField] private Transform _eyes;
+    [SerializeField] private LayerMask playerLayerMask;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Transform eyes;
     //[SerializeField] private float rayDistance = 20f;
 
     [Header("Field of View")]
@@ -23,13 +23,14 @@ public class EnemyAI_Vision : MonoBehaviour
     [SerializeField] private float sphereRadius = 10f;
     [SerializeField] private int maxColliderSize = 10;
     [SerializeField] private float scanInterval = 1f;
-    [SerializeField] int scanColl;
+    [SerializeField] int detectedCollidersCount;
     private Collider[] _hitColliders;
     
     private Coroutine CheckingTheSurroundingsReference;
 
     // bool variables
-    private bool _playerInFov;
+    public bool IsPlayerInFieldOfView;
+    public bool IsPlayerOutOfFieldOfView;
 
     private void Awake()
     {
@@ -39,16 +40,15 @@ public class EnemyAI_Vision : MonoBehaviour
 
     private void Start()
     {
-        if(_eyes == null)
+        if(eyes == null)
         {
             Debug.Log("THER IS NO EYES TRANSFORM");
-            _eyes = transform;
+            eyes = transform;
         } 
-        if(_playerTransform == null)
+        if(playerTransform == null)
         {
             GameObject _playerGO = GameObject.FindGameObjectWithTag("Player");
-            _playerTransform = _playerGO.transform;
-            Debug.Log(" I can't find a player GameObject in scene !!");
+            playerTransform = _playerGO.transform;
         }  
         CheckingTheSurroundingsReference = StartCoroutine(CheckingTheSurroundings());
 
@@ -69,9 +69,9 @@ public class EnemyAI_Vision : MonoBehaviour
     {
         Physics.SyncTransforms();
         
-        scanColl = Physics.OverlapSphereNonAlloc(transform.position, sphereRadius ,_hitColliders,_playerLayer);
+        detectedCollidersCount = Physics.OverlapSphereNonAlloc(transform.position, sphereRadius ,_hitColliders, playerLayerMask);
         
-        if (scanColl > 0)
+        if (detectedCollidersCount > 0)
         {
             ConeScan();
             Debug.Log("Player IN SPHERE RANGE ");
@@ -90,26 +90,27 @@ public class EnemyAI_Vision : MonoBehaviour
     private bool ConeScan()
     {
         
-        Vector3 directionToTarget = (_playerTransform.position - transform.position).normalized;
-        float distanceToTarget = Vector3.Distance(transform.position,_playerTransform.position);
+        Vector3 directionToTarget = (playerTransform.position - transform.position).normalized;
+        float distanceToTarget = Vector3.Distance(transform.position,playerTransform.position);
         
         if(distanceToTarget > sphereRadius) return false;
 
-        float angleToTarget = Vector3.Angle(_eyes.transform.forward,directionToTarget);
+        float angleToTarget = Vector3.Angle(eyes.transform.forward,directionToTarget);
         if(angleToTarget < viewAngle / 2f)
         {
             RaycastHit hit;
 
-            if(Physics.Raycast(_eyes.transform.position, directionToTarget, out hit, distanceToTarget,_playerLayer))
+            if(Physics.Raycast(eyes.transform.position, directionToTarget, out hit, distanceToTarget,playerLayerMask))
             {
-                    if (!_playerInFov)
+                    if (!IsPlayerInFieldOfView)
                     {
                         Debug.Log("Player in FOV");
-                        _playerInFov = true;
-                        QuestionMarkPlayerVisableInFov();
+                        IsPlayerInFieldOfView = true;
+                        OnPlayerEnteredFOV();
                         return true;
                     }
-            _playerInFov = false;
+            
+            IsPlayerInFieldOfView = false;
             return false;
             }
         }
@@ -119,12 +120,18 @@ public class EnemyAI_Vision : MonoBehaviour
     }
 #endregion
 
-#region Question Mar invoke funcion
-    private void QuestionMarkPlayerVisableInFov()
+
+#region 
+    private void OnPlayerEnteredFOV()
     {
-        Debug.Log("Player in FOV signal");
+        Debug.Log("Player in  Field Of View signal");
         OnPlayerInFovAction?.Invoke();
     }
+
+
+
+
+
 #endregion
 
 #region OnDrawGizmos

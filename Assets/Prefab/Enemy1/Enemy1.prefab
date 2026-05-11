@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4211451960700989573}
   - component: {fileID: 1101542280810968612}
   m_Layer: 8
-  m_Name: eyes
+  m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,16 +201,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad004a83519445409dbd5ac3ab139e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerLayer:
+  playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  _playerTransform: {fileID: 0}
-  _eyes: {fileID: 7776042313819634881}
+  playerTransform: {fileID: 0}
+  eyes: {fileID: 7776042313819634881}
   viewAngle: 60
   sphereRadius: 10
   maxColliderSize: 10
   scanInterval: 0.5
-  scanColl: 0
+  detectedCollidersCount: 0
+  IsPlayerInFieldOfView: 0
+  IsPlayerOutOfFieldOfView: 0
 --- !u!23 &1710073144903579182
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -425,7 +427,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyAI_Vision: {fileID: 1079906337851234722}
-  suspicionClip: {fileID: 8300000, guid: 7c389a81908f1914cbc91b35b01a1b5e, type: 3}
   meshRenderer: {fileID: 4434870815057344266}
 --- !u!82 &7722604969496449343
 AudioSource:
