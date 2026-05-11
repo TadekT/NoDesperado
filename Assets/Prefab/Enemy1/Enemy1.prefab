@@ -203,7 +203,7 @@ MonoBehaviour:
     m_Bits: 64
   playerTransform: {fileID: 0}
   eyes: {fileID: 7776042313819634881}
-  viewAngle: 60
+  viewAngle: 45
   sphereRadius: 10
   maxColliderSize: 10
   scanInterval: 0.5
