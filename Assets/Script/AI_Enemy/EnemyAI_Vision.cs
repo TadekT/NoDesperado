@@ -6,8 +6,6 @@ using UnityEngine;
 public class EnemyAI_Vision : MonoBehaviour
 {
 
-    public event Action OnPlayerEnteredFOV;
-    public event Action OnPlayerExitedFOV;
 
 
     [SerializeField] private LayerMask playerLayerMask;
@@ -23,18 +21,9 @@ public class EnemyAI_Vision : MonoBehaviour
     [Header("Sphere Cast arg")]
     [SerializeField] private float sphereRadius = 10f;
     [SerializeField] private int maxColliderSize = 10;
-    [SerializeField] private float scanInterval = 1f;
     [SerializeField] int detectedCollidersCount;
     private Collider[] _hitColliders;
     
-
-    // bool variables
-    public bool _isPlayerInFieldOfView = false;
-
-
-
-
-    public bool IsPlayerInFieldOfView => _isPlayerInFieldOfView;
 
 
     private void Awake()
@@ -66,7 +55,11 @@ public class EnemyAI_Vision : MonoBehaviour
     {
         Physics.SyncTransforms();
         
-        detectedCollidersCount = Physics.OverlapSphereNonAlloc(transform.position, sphereRadius ,_hitColliders, playerLayerMask);
+        detectedCollidersCount = Physics.OverlapSphereNonAlloc(
+            transform.position,
+            sphereRadius ,
+            _hitColliders,
+            playerLayerMask);
         
         if (detectedCollidersCount > 0)
         {

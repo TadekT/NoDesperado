@@ -27,23 +27,7 @@ public class Question_mark_Signal : MonoBehaviour
         meshRenderer.enabled = false;
     }
 
-    private void OnEnable()
-    {
-        if(EnemyAI_Vision != null)
-        {
-            EnemyAI_Vision.OnPlayerEnteredFOV += ShowQuestionMark;
-            EnemyAI_Vision.OnPlayerExitedFOV += HideQuestionMark;
-        }
-    }
 
-    private void OnDisable()
-    {
-        if(EnemyAI_Vision != null)
-        {
-            EnemyAI_Vision.OnPlayerEnteredFOV -= ShowQuestionMark;
-            EnemyAI_Vision.OnPlayerExitedFOV -= HideQuestionMark;
-        }
-    }
 
     private void ShowQuestionMark()
     {

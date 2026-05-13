@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyAI_Movement))]
@@ -7,19 +8,22 @@ using UnityEngine;
 
 public class EnemyAI_Brain : MonoBehaviour
 {
-private enum State
+private enum EnemyState
 {
     None, Idle, Patrol, Suspicious, Chase, Attack, Search
 }
-[SerializeField] private State currentState = State.None;
-[SerializeField] private State previousState;
+[SerializeField] private EnemyState currentState = EnemyState.None;
+[SerializeField] private EnemyState previousState;
 
 
 [SerializeField] private EnemyAI_Movement movement;
 [SerializeField] private EnemyAI_Vision vision;
 
+[Header("Idle")]
+[SerializeField] private float idleDuration = 2f;
 
 
+private float stateTimer;
 
 
     private void Awake()
@@ -41,23 +45,28 @@ private enum State
 
     private void Start()
     {
-        if(movement == null)
+        if(movement.HasWyapoints)
         {
-            this.enabled = false;
-            return;
+            ChangeState(EnemyState.Patrol);
         }
-        ChangeState(State.Patrol);
+        else
+        {
+            ChangeState(EnemyState.Idle);
+            
+        }
         
     }
 
 
     private void Update()
     {
+        stateTimer += Time.deltaTime;
 
+        TickState(currentState);
     }
     
 
-    private void ChangeState(State nextState)
+    private void ChangeState(EnemyState nextState)
     {
         if(nextState == currentState) 
             return;
@@ -65,47 +74,84 @@ private enum State
         previousState = currentState;
         ExitState(previousState);
         
+        stateTimer = 0;
         currentState = nextState;
         
-        EntereState(nextState);
+        EnterState(nextState);
 
         
     }
     
     
-    private void TickState(State state)
+    private void TickState(EnemyState state)
     {
         switch (state)
         {
-            
+            case EnemyState.Idle:
+                TickIdle();
+                break;
+
+            case EnemyState.Patrol:
+                TickPatrol();
+                break;
+
         }        
     }
 
 
-    private void EntereState(State state)
+    private void EnterState(EnemyState state)
     {   
         switch(state)
         {
             
-            case State.Idle:
+            case EnemyState.Idle:
+                movement.Stop();
                 break;
-            case State.Patrol:
+            case EnemyState.Patrol:
+                if (movement.HasWyapoints)
+                {
+                    movement.SetNextPatrolDestination();
+                }
                 break;
-            case State.Suspicious:
+            case EnemyState.Suspicious:
                 break;
         }
     }
 
 
-    private void ExitState(State state)
+    private void ExitState(EnemyState state)
     {
         switch(state)
         {
-            case State.Idle:
+            case EnemyState.Idle:
                 break;
         }
     }
 
 
+    private void TickIdle()
+    {
+        if(stateTimer >= idleDuration)
+        {
+            ChangeState(EnemyState.Patrol);
+        }
+    }
+
+
+    
+    private void TickPatrol()
+    {
+
+        if (!movement.HasWyapoints)
+        {
+            ChangeState(EnemyState.Idle);
+            return;
+        }
+
+        if (movement.HasReachedDestination())
+        {
+            ChangeState(EnemyState.Idle);
+        }
+    }
 
 }

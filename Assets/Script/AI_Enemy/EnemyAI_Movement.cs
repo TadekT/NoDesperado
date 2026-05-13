@@ -3,12 +3,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using UnityEditor.PackageManager.Requests;
 
 
 public class EnemyAI_Movement : MonoBehaviour
 {   
-
-    public event Action OnIdleFinished;
 
     [Header("Waypoints")]
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
@@ -19,12 +18,12 @@ public class EnemyAI_Movement : MonoBehaviour
 
 
     [Header("Transitions")]
-    [SerializeField] private float idleTimeInterval = 2f;
     [SerializeField] private float waypointReachedThreshold = 0.15f;
     
     [SerializeField] private int currentWaypointIndex = 0;
 
-    public bool HasWyapoint => waypoints != null && waypoints.Count > 0;
+    public bool HasWyapoints => waypoints != null && waypoints.Count > 0;
+
 
     private void Awake()
     {
@@ -35,13 +34,13 @@ public class EnemyAI_Movement : MonoBehaviour
 
     public void SetNextPatrolDestination()
     {
-        if (!HasWyapoint) 
+        if (!HasWyapoints) 
             return;
         if(_agent == null)
             return;
 
         Resume();
-        
+
         Transform waypoint = waypoints[currentWaypointIndex];
         _agent.SetDestination(waypoint.position);
 
@@ -66,6 +65,7 @@ public class EnemyAI_Movement : MonoBehaviour
         if(_agent == null) return;
 
         _agent.isStopped = true;
+        _agent.ResetPath();
     
     }
     
