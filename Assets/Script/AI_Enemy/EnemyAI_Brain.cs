@@ -23,8 +23,13 @@ private enum EnemyState
 [SerializeField] private float idleDuration = 2f;
 
 
-private float stateTimer;
+[SerializeField] private float stateTimer;
 
+
+    private Transform target;
+    private Vector3 lastKnownPlayerPosition;
+
+    
 
     private void Awake()
     {
@@ -65,6 +70,17 @@ private float stateTimer;
         TickState(currentState);
     }
     
+        private void UpdateVisionData()
+    {
+        if (vision == null)
+            return;
+
+        if (vision.CanSeePlayer && vision.PlayerTransform != null)
+        {
+            target = vision.PlayerTransform;
+            lastKnownPlayerPosition = target.position;
+        }
+    }
 
     private void ChangeState(EnemyState nextState)
     {
@@ -95,6 +111,10 @@ private float stateTimer;
                 TickPatrol();
                 break;
 
+            case EnemyState.Suspicious:
+                TickSuspicious();
+                break;
+
         }        
     }
 
@@ -107,13 +127,17 @@ private float stateTimer;
             case EnemyState.Idle:
                 movement.Stop();
                 break;
+
             case EnemyState.Patrol:
                 if (movement.HasWyapoints)
                 {
                     movement.SetNextPatrolDestination();
                 }
                 break;
+                
+
             case EnemyState.Suspicious:
+                movement.Stop();
                 break;
         }
     }
@@ -141,7 +165,11 @@ private float stateTimer;
     
     private void TickPatrol()
     {
-
+        if (CanSeePlayer())
+        {
+            ChangeState(EnemyState.Suspicious);
+            return;
+        }
         if (!movement.HasWyapoints)
         {
             ChangeState(EnemyState.Idle);
@@ -154,4 +182,19 @@ private float stateTimer;
         }
     }
 
+    private void TickSuspicious()
+    {
+        if (!CanSeePlayer())
+        {
+            ChangeState(EnemyState.Patrol);
+        }
+
+    }
+
+    private bool CanSeePlayer()
+    {
+        return vision != null &&
+               vision.CanSeePlayer &&
+               vision.PlayerTransform != null;
+    }
 }

@@ -134,9 +134,9 @@ GameObject:
   - component: {fileID: 103492318}
   - component: {fileID: 103492317}
   - component: {fileID: 103492316}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -334,9 +334,9 @@ GameObject:
   - component: {fileID: 128660578}
   - component: {fileID: 128660577}
   - component: {fileID: 128660576}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1108,9 +1108,9 @@ GameObject:
   - component: {fileID: 940377275}
   - component: {fileID: 940377274}
   - component: {fileID: 940377273}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1529,9 +1529,9 @@ GameObject:
   - component: {fileID: 1373838817}
   - component: {fileID: 1373838816}
   - component: {fileID: 1373838815}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1882,6 +1882,30 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6b82e538a0ffa541880ff2e90190335, type: 3}
+--- !u!114 &1938009085 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1079906337851234722, guid: f6b82e538a0ffa541880ff2e90190335,
+    type: 3}
+  m_PrefabInstance: {fileID: 2912685162306206598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad004a83519445409dbd5ac3ab139e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1938009086 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7928188875767749447, guid: f6b82e538a0ffa541880ff2e90190335,
+    type: 3}
+  m_PrefabInstance: {fileID: 2912685162306206598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a5fc8c012a33c48b5c98d7671f8251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2012035249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,6 +2105,11 @@ PrefabInstance:
       propertyPath: viewAngle
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 1079906337851234722, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: obstacleLayerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 1757466208922145690, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}
       propertyPath: waypoints.Array.data[0]
@@ -2171,6 +2200,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7306128240489289470, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: vision
+      value: 
+      objectReference: {fileID: 1938009085}
+    - target: {fileID: 7306128240489289470, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: movement
+      value: 
+      objectReference: {fileID: 1938009086}
+    - target: {fileID: 7928188875767749447, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928188875767749447, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2594155934567998228}
+    - target: {fileID: 7928188875767749447, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1029669093}
+    - target: {fileID: 7928188875767749447, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: waypoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1297332450}
     - target: {fileID: 8835898860423023241, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}
       propertyPath: m_Enabled

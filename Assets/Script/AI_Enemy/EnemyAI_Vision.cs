@@ -6,24 +6,30 @@ using UnityEngine;
 public class EnemyAI_Vision : MonoBehaviour
 {
 
-
-
-    [SerializeField] private LayerMask playerLayerMask;
-    [SerializeField] private Transform playerTransform;
+    [Header("References")]
     [SerializeField] private Transform eyes;
-    //[SerializeField] private float rayDistance = 20f;
+    [SerializeField] private Transform playerTransform;
+
+
+    [Header("Layers")]
+    [SerializeField] private LayerMask playerLayerMask;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
     [Header("Field of View")]
+    [SerializeField] private float viewRadius = 10f;
     [SerializeField] private float viewAngle = 60f; 
+    [SerializeField] private float scanInterval = 0.2f;
     
 
 
-    [Header("Sphere Cast arg")]
-    [SerializeField] private float sphereRadius = 10f;
-    [SerializeField] private int maxColliderSize = 10;
-    [SerializeField] int detectedCollidersCount;
+    private int maxColliderSize = 10;
     private Collider[] _hitColliders;
-    
+    private float scanTimer;
+
+
+    public bool CanSeePlayer { get; private set; }
+    public Transform PlayerTransform { get; private set; }
+    public Vector3 LastKnownPlayerPosition { get; private set; }
 
 
     private void Awake()
@@ -46,65 +52,80 @@ public class EnemyAI_Vision : MonoBehaviour
             playerTransform = _playerGO.transform;
         }  
         
+    }
+    private void Update()
+    {
+        scanTimer -= Time.deltaTime;
 
+        if (scanTimer > 0f)
+            return;
+
+        scanTimer = scanInterval;
+        SphereScanForPlayer();
     }
 
-    
-#region Sphere Scan 
-    private  bool SphereScan()
+    #region Sphere Scan 
+    private void SphereScanForPlayer()
     {
         Physics.SyncTransforms();
         
-        detectedCollidersCount = Physics.OverlapSphereNonAlloc(
+        int hits = Physics.OverlapSphereNonAlloc(
             transform.position,
-            sphereRadius ,
+            viewRadius ,
             _hitColliders,
-            playerLayerMask);
+            playerLayerMask,
+            QueryTriggerInteraction.Ignore
+            );
         
-        if (detectedCollidersCount > 0)
+        for(int i = 0; i < hits; i++)
         {
-            FieldOfViewScan();
-            Debug.Log("Player IN SPHERE RANGE ");
-            return true;
-        }
-        else
-        {   
+            Transform candidate = _hitColliders[i].transform;
 
-            Debug.Log("Sphere find shiit ");
-            return false;
+            if (IsTargetVisible(candidate))
+            {
+                CanSeePlayer = true;
+                PlayerTransform = candidate;
+                LastKnownPlayerPosition = candidate.position;
+                return;
+            }
+
         }
+
+        CanSeePlayer = false;
+        PlayerTransform = null;
     }
 #endregion
 
 
-#region Cone Scan 
-    private bool FieldOfViewScan()
+#region Is Target Visible in FOV
+    private bool IsTargetVisible(Transform target)
     {
-        
-        Vector3 directionToTarget = (playerTransform.position - transform.position).normalized;
-
-        float distanceToTarget = Vector3.Distance(transform.position,playerTransform.position);  
-
-        if(distanceToTarget > sphereRadius)
-        {
-
+        if (target == null)
             return false;
-        } 
 
-        float angleToTarget = Vector3.Angle(eyes.transform.forward,directionToTarget);
+        Vector3 origin = eyes.position;
+        Vector3 targetPosition = target.position + Vector3.up;
 
-        if(angleToTarget < viewAngle / 2f)
-        {
-            RaycastHit hit;
-            if(Physics.Raycast(eyes.transform.position, directionToTarget, out hit, distanceToTarget,playerLayerMask))
-            {
+        Vector3 directionToTarget = targetPosition - origin;
+        float distanceToTarget = directionToTarget.magnitude;
 
-                return true;
-            }
-        }
+        if (distanceToTarget > viewRadius)
+            return false;
 
-     
-        return false;
+        float angleToTarget = Vector3.Angle(eyes.forward, directionToTarget.normalized);
+
+        if (angleToTarget > viewAngle / 2f)
+            return false;
+
+        bool blockedByObstacle = Physics.Raycast(
+            origin,
+            directionToTarget.normalized,
+            distanceToTarget,
+            obstacleLayerMask,
+            QueryTriggerInteraction.Ignore
+        );
+
+        return !blockedByObstacle;
     }
 #endregion
 
@@ -115,10 +136,10 @@ public class EnemyAI_Vision : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position,sphereRadius);
+        Gizmos.DrawWireSphere(transform.position,viewRadius);
 
 
-        Vector3 forward = transform.forward * sphereRadius;
+        Vector3 forward = transform.forward * viewRadius;
         Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * forward;
         Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * forward;
         
