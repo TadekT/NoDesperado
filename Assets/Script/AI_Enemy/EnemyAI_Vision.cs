@@ -27,7 +27,6 @@ public class EnemyAI_Vision : MonoBehaviour
     [SerializeField] int detectedCollidersCount;
     private Collider[] _hitColliders;
     
-    private Coroutine CheckingTheSurroundingsReference;
 
     // bool variables
     public bool _isPlayerInFieldOfView = false;
@@ -41,34 +40,26 @@ public class EnemyAI_Vision : MonoBehaviour
     private void Awake()
     {
         _hitColliders = new Collider[maxColliderSize];
+
+        if(eyes == null)
+        {
+            eyes = transform;
+        } 
         
     }
 
     private void Start()
     {
-        if(eyes == null)
-        {
-            Debug.Log("THER IS NO EYES TRANSFORM");
-            eyes = transform;
-        } 
+
         if(playerTransform == null)
         {
             GameObject _playerGO = GameObject.FindGameObjectWithTag("Player");
             playerTransform = _playerGO.transform;
         }  
-        CheckingTheSurroundingsReference = StartCoroutine(CheckingTheSurroundings());
+        
 
     }
 
-
-    private IEnumerator CheckingTheSurroundings()
-    {
-        while (true)
-        {
-            SphereScan();
-            yield return new WaitForSecondsRealtime(scanInterval);
-        }
-    }
     
 #region Sphere Scan 
     private  bool SphereScan()
@@ -85,7 +76,7 @@ public class EnemyAI_Vision : MonoBehaviour
         }
         else
         {   
-            SetPlayerOutOfFOV();
+
             Debug.Log("Sphere find shiit ");
             return false;
         }
@@ -103,7 +94,7 @@ public class EnemyAI_Vision : MonoBehaviour
 
         if(distanceToTarget > sphereRadius)
         {
-            SetPlayerOutOfFOV();
+
             return false;
         } 
 
@@ -114,40 +105,18 @@ public class EnemyAI_Vision : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(eyes.transform.position, directionToTarget, out hit, distanceToTarget,playerLayerMask))
             {
-                SetPlayerInFOV();
+
                 return true;
             }
         }
 
-        SetPlayerOutOfFOV();        
+     
         return false;
     }
 #endregion
 
  
 
-#region 
-    private void SetPlayerInFOV()
-    {
-        if(!_isPlayerInFieldOfView)
-        {
-            _isPlayerInFieldOfView = true;
-            OnPlayerEnteredFOV?.Invoke();
-        }
-    }
-
-    private void SetPlayerOutOfFOV()
-    {
-        if(_isPlayerInFieldOfView)
-        {
-            _isPlayerInFieldOfView = false;
-            OnPlayerExitedFOV?.Invoke();
-        }
-    }
-
-
-
-#endregion
 
 #region OnDrawGizmos
     private void OnDrawGizmos()

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
+[RequireComponent(typeof(EnemyAI_Movement))]
+[RequireComponent(typeof(EnemyAI_Movement))]
 
 public class EnemyAI_Brain : MonoBehaviour
 {
@@ -12,8 +12,12 @@ private enum State
     None, Idle, Patrol, Suspicious, Chase, Attack, Search
 }
 [SerializeField] private State currentState = State.None;
-[SerializeField] private EnemyAI_Movement _enemyMovement;
-[SerializeField] private EnemyAI_Vision _enemyVision;
+[SerializeField] private State previousState;
+
+
+[SerializeField] private EnemyAI_Movement movement;
+[SerializeField] private EnemyAI_Vision vision;
+
 
 
 
@@ -21,52 +25,23 @@ private enum State
     private void Awake()
     {
 
-        if(_enemyMovement == null)
+        if(movement == null)
         {
-            _enemyMovement = GetComponent<EnemyAI_Movement>();
+            movement = GetComponent<EnemyAI_Movement>();
         }
         
 
-        if(_enemyVision == null)
+        if(vision == null)
         {
-            _enemyVision = GetComponent<EnemyAI_Vision>();
+            vision = GetComponent<EnemyAI_Vision>();
         }
 
     }
-
-    private void OnEnable()
-    {
-       if(_enemyMovement != null)
-        {
-            _enemyMovement.OnIdleFinished += HandleIdleFinished;
-        }
-        if(_enemyVision != null)
-        {
-            _enemyVision.OnPlayerEnteredFOV += HandlePlayerInFOV;
-            _enemyVision.OnPlayerExitedFOV +=  HandlePlayerOutFOV;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if(_enemyMovement != null)
-        {
-            _enemyMovement.OnIdleFinished -= HandleIdleFinished;
-            
-        }
-
-        if(_enemyVision != null)
-        {
-            _enemyVision.OnPlayerEnteredFOV -= HandlePlayerInFOV;
-            _enemyVision.OnPlayerExitedFOV -=  HandlePlayerOutFOV;
-        }       
-    }
-
 
 
     private void Start()
     {
-        if(_enemyMovement == null)
+        if(movement == null)
         {
             this.enabled = false;
             return;
@@ -78,26 +53,32 @@ private enum State
 
     private void Update()
     {
-        if (_enemyMovement == null)
-            return;
 
-        if (currentState == State.Patrol && _enemyMovement.HasReachedWaypoint())
-        {
-            ChangeState(State.Idle);
-        }
     }
+    
 
-
-    private void ChangeState(State next)
+    private void ChangeState(State nextState)
     {
-        if(next == currentState) 
+        if(nextState == currentState) 
             return;
 
-        ExitState(currentState);
-
-        currentState = next;
+        previousState = currentState;
+        ExitState(previousState);
         
-        EntereState(currentState);
+        currentState = nextState;
+        
+        EntereState(nextState);
+
+        
+    }
+    
+    
+    private void TickState(State state)
+    {
+        switch (state)
+        {
+            
+        }        
     }
 
 
@@ -107,13 +88,10 @@ private enum State
         {
             
             case State.Idle:
-                _enemyMovement.IdleStart();
                 break;
             case State.Patrol:
-                _enemyMovement.PatrolState();
                 break;
             case State.Suspicious:
-                _enemyMovement.SuspiciousState();
                 break;
         }
     }
@@ -124,35 +102,10 @@ private enum State
         switch(state)
         {
             case State.Idle:
-                _enemyMovement.IdleStop();
                 break;
         }
     }
 
 
-    private void HandleIdleFinished()
-    {
-        if(currentState == State.Idle)
-        {
-            ChangeState(State.Patrol);
-        }
-    }
-
-
-    private void HandlePlayerInFOV()
-    {
-        if(currentState != State.Suspicious)
-        {
-            ChangeState(State.Suspicious);
-        }
-    }
-
-    private void HandlePlayerOutFOV()
-    {
-        if(currentState == State.Suspicious)
-        {
-            ChangeState(State.Patrol);
-        }
-    }
 
 }

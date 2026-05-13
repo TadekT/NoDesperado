@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
+
 public class EnemyAI_Movement : MonoBehaviour
 {   
 
@@ -23,40 +24,64 @@ public class EnemyAI_Movement : MonoBehaviour
     
     [SerializeField] private int currentWaypointIndex = 0;
 
-
-    [Header("Courutine reference")]
-    private Coroutine IdleCoroutineReference;
-    
+    public bool HasWyapoint => waypoints != null && waypoints.Count > 0;
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Start()
-    {
-        if(waypoints.Count == 0)
-        {
-            Debug.LogError("No waypoints assigned to the enemy.");
-            return;
-        }
-    }
     
-    public void PatrolState()
+
+    public void SetNextPatrolDestination()
     {
-        if (waypoints.Count == 0) 
+        if (!HasWyapoint) 
             return;
         if(_agent == null)
             return;
 
-        _agent.isStopped = false;
+        Resume();
+        
+        Transform waypoint = waypoints[currentWaypointIndex];
+        _agent.SetDestination(waypoint.position);
 
-        _agent.SetDestination(waypoints[currentWaypointIndex].position);
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+        currentWaypointIndex++;
+        currentWaypointIndex %= waypoints.Count;
+    
+    }
+
+
+    public void MoveTo(Vector3 position)
+    {
+        if(_agent == null) return;
+
+        Resume();
+        _agent.SetDestination(position);
+    
+    }
+
+
+    public void Stop()
+    {
+        if(_agent == null) return;
+
+        _agent.isStopped = true;
+    
     }
     
-    public bool HasReachedWaypoint()
+
+    public void Resume()
     {
+        if(_agent == null) return;
+
+        _agent.isStopped = false;
+
+    }
+
+
+    public bool HasReachedDestination()
+    {
+        
         if(_agent == null)
             return false;
         
@@ -67,46 +92,9 @@ public class EnemyAI_Movement : MonoBehaviour
             return false;
 
         return !_agent.hasPath || _agent.velocity.sqrMagnitude <= 0.01f;
-    }
-
-#region idle
-    private IEnumerator IdleState()
-    {
-       yield return new WaitForSecondsRealtime(idleTimeInterval);
-       OnIdleFinished?.Invoke();
-    }
-
-    public void IdleStart()
-    {
-        if(IdleCoroutineReference != null)
-            return;
-
-        IdleCoroutineReference = StartCoroutine(IdleState());
-        Debug.Log("Start Idle ");
-    }
-
-    public void IdleStop()
-    {
-        if(IdleCoroutineReference == null)
-            return;
-
-        StopCoroutine(IdleCoroutineReference);
-        IdleCoroutineReference = null;
-        Debug.Log("Stop Idle ");
-        
-    }
-#endregion    
-
-    public void SuspiciousState()
-    {
-        _agent.isStopped = true;
     
-
     }
 
-    private void FollowPlayerMovement()
-    {
 
-    }
 
 }
