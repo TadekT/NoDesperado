@@ -1,15 +1,13 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
-using UnityEditor.PackageManager.Requests;
+
 
 
 public class EnemyAI_Movement : MonoBehaviour
 {   
 
-    [Header("Waypoints")]
+    [Header("Waypoints list")]
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     
 

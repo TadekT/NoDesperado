@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyAI_Movement))]
@@ -8,22 +5,24 @@ using UnityEngine;
 
 public class EnemyAI_Brain : MonoBehaviour
 {
-private enum EnemyState
-{
-    None, Idle, Patrol, Suspicious, Chase, Attack, Search
-}
-[SerializeField] private EnemyState currentState = EnemyState.None;
-[SerializeField] private EnemyState previousState;
+
+        
+    private enum EnemyState
+    {
+        None, Idle, Patrol, Suspicious, Chase, Attack, Search
+    }
+    [SerializeField] private EnemyState currentState = EnemyState.None;
+    [SerializeField] private EnemyState previousState;
 
 
-[SerializeField] private EnemyAI_Movement movement;
-[SerializeField] private EnemyAI_Vision vision;
+    [SerializeField] private EnemyAI_Movement movement;
+    [SerializeField] private EnemyAI_Vision vision;
 
-[Header("Idle")]
-[SerializeField] private float idleDuration = 2f;
+    [Header("Idle")]
+    [SerializeField] private float idleDuration = 2f;
 
 
-[SerializeField] private float stateTimer;
+    [SerializeField] private float stateTimer;
 
 
     private Transform target;
@@ -68,9 +67,11 @@ private enum EnemyState
         stateTimer += Time.deltaTime;
 
         TickState(currentState);
+
+        UpdateVisionData();
     }
     
-        private void UpdateVisionData()
+    private void UpdateVisionData()
     {
         if (vision == null)
             return;
@@ -118,7 +119,8 @@ private enum EnemyState
         }        
     }
 
-
+    //Metoda do wchodzenia / rozpoczynania stanów 
+    //Ma ona wywołac konkretną funkcje zachodząco podczas sprecyzowanego stanu
     private void EnterState(EnemyState state)
     {   
         switch(state)
@@ -142,7 +144,9 @@ private enum EnemyState
         }
     }
 
-
+    //Metoda do wychodzenia / zamykania konkretnych statów
+    //jeśli będzie potrzeba to musi wyłączyć konkretną akcje 
+    // np: mogło by wyłączyć animacje idle / albo animacje walk itp
     private void ExitState(EnemyState state)
     {
         switch(state)
@@ -152,36 +156,43 @@ private enum EnemyState
         }
     }
 
-
+    // co sie tu dzieje :
+    // jeśli jestem w TickIdle to:
     private void TickIdle()
     {
+        //oczekauje aż timer(stoper) osiągnie swoją wartość
+        //potem wracam do trybu patrol
         if(stateTimer >= idleDuration)
         {
             ChangeState(EnemyState.Patrol);
         }
     }
 
-
-    
+    // co sie tu dzieje :
+    // jeśli jestem w TickPatrol() to:
     private void TickPatrol()
     {
+        //widze gracz , przechodze TickSuspicious 
         if (CanSeePlayer())
         {
             ChangeState(EnemyState.Suspicious);
             return;
         }
+        //jeśli nie posiadam waypointa to przechodze w TickIdle
         if (!movement.HasWyapoints)
         {
             ChangeState(EnemyState.Idle);
             return;
         }
-
+        // jeśli dotarłem do waypointa to przechodze w TickIdle
         if (movement.HasReachedDestination())
         {
             ChangeState(EnemyState.Idle);
         }
     }
 
+    // co sie tu dzieje :
+    // jeśli jestem w TickSuspicious i przestaje widziec gracza to wracam do patrolu
     private void TickSuspicious()
     {
         if (!CanSeePlayer())
@@ -197,4 +208,5 @@ private enum EnemyState
                vision.CanSeePlayer &&
                vision.PlayerTransform != null;
     }
+
 }

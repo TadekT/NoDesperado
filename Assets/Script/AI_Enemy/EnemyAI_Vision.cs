@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI_Vision : MonoBehaviour
@@ -95,6 +92,7 @@ public class EnemyAI_Vision : MonoBehaviour
         PlayerTransform = null;
     }
 #endregion
+
 
 
 #region Is Target Visible in FOV
