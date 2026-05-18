@@ -2106,10 +2106,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2394200994721414358, guid: f6b82e538a0ffa541880ff2e90190335,
+    - target: {fileID: 1079906337851234722, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
+      propertyPath: scanInterval
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3484672551802733971, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}
@@ -2165,11 +2165,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7306128240489289470, guid: f6b82e538a0ffa541880ff2e90190335,
-        type: 3}
-      propertyPath: suspiciousDuration
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7928188875767749447, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}

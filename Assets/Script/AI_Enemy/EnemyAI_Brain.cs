@@ -8,8 +8,7 @@ using UnityEngine;
 public class EnemyAI_Brain : MonoBehaviour
 {
 
-    public event Action<EnemyState,EnemyState> OnSuspiciousState;
-    public event Action<EnemyState,EnemyState> OnChaseState;
+    public event Action<EnemyState,EnemyState> OnChangeState;
 
     // prosty enum state trzymający wszystkie stany przeciwnika AI
     public enum EnemyState
@@ -115,8 +114,9 @@ public class EnemyAI_Brain : MonoBehaviour
         currentState = nextState;
         
         EnterState(nextState);
-        OnSuspiciousState?.Invoke(previousState,currentState);
-        OnChaseState?.Invoke(previousState,currentState);
+
+        OnChangeState?.Invoke(previousState,currentState);
+
     }
     
     
@@ -134,6 +134,9 @@ public class EnemyAI_Brain : MonoBehaviour
 
             case EnemyState.Suspicious:
                 TickSuspicious();
+                break;
+            case EnemyState.Chase:
+                TickChase();
                 break;
 
         }        
@@ -156,11 +159,13 @@ public class EnemyAI_Brain : MonoBehaviour
                     movement.MoveTo(movement.CurrentWaypoint());
                 }
                 break;
-                
-
             case EnemyState.Suspicious:
                 movement.Stop();
                 break;
+        
+            case EnemyState.Chase:
+            break;
+
         }
     }
 
@@ -231,6 +236,18 @@ public class EnemyAI_Brain : MonoBehaviour
             ChangeState(EnemyState.Patrol);
         }
         
+    }
+
+    private void TickChase()
+    {
+        if (CanSeePlayer())
+        {
+            movement.MoveTo(lastKnownPlayerPosition);
+        }
+        else
+        {
+            ChangeState(EnemyState.Patrol);
+        }
     }
 
     private bool CanSeePlayer()

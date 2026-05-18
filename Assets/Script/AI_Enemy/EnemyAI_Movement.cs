@@ -57,6 +57,15 @@ public class EnemyAI_Movement : MonoBehaviour
     
     }
 
+    public void Walk()
+    {
+        _agent.speed = 3;
+    }
+
+    public void Run()
+    {
+        _agent.speed = 4;
+    }
 
     public void Stop()
     {

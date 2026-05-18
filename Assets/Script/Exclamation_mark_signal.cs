@@ -29,7 +29,7 @@ public class Exclamation_mark_signal : MonoBehaviour
     {
         if(enemyAI_Brain != null)
         {
-            enemyAI_Brain.OnChaseState += HandleChaseState;
+            enemyAI_Brain.OnChangeState += HandleChaseState;
         }   
 
     }
@@ -38,7 +38,7 @@ public class Exclamation_mark_signal : MonoBehaviour
     {
         if(enemyAI_Brain != null)
         {
-            enemyAI_Brain.OnChaseState -= HandleChaseState;
+            enemyAI_Brain.OnChangeState -= HandleChaseState;
         }  
 
     }

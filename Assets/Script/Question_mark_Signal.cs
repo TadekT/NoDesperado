@@ -29,7 +29,7 @@ public class Question_mark_Signal : MonoBehaviour
     {
         if(enemyAI_Brain != null)
         {
-            enemyAI_Brain.OnSuspiciousState += HandleSuspiciousState;
+            enemyAI_Brain.OnChangeState += HandleSuspiciousState;
         }   
 
     }
@@ -38,7 +38,7 @@ public class Question_mark_Signal : MonoBehaviour
     {
         if(enemyAI_Brain != null)
         {
-            enemyAI_Brain.OnSuspiciousState -= HandleSuspiciousState;
+            enemyAI_Brain.OnChangeState -= HandleSuspiciousState;
         }  
 
     }

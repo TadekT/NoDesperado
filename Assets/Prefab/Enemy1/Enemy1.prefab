@@ -172,7 +172,7 @@ MonoBehaviour:
   movement: {fileID: 7928188875767749447}
   vision: {fileID: 1079906337851234722}
   idleDuration: 2
-  suspiciousDuration: 2
+  suspiciousDuration: 5
   stateTimer: 0
 --- !u!114 &7928188875767749447
 MonoBehaviour:
@@ -192,6 +192,7 @@ MonoBehaviour:
   - {fileID: 0}
   waypointReachedThreshold: 0.15
   currentWaypointIndex: 0
+  currentWaypointPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1079906337851234722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,8 +214,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   viewRadius: 10
-  viewAngle: 45
-  scanInterval: 0.5
+  viewAngle: 60
+  scanInterval: 0.2
 --- !u!23 &1710073144903579182
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -317,10 +318,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_Speed: 3
+  m_Acceleration: 10
+  avoidancePriority: 60
+  m_AngularSpeed: 150
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -328,7 +329,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!1001 &3819548039885532516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -516,7 +517,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.28
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -650,8 +651,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: af9ca0398ac8cf94590e87963c5b0f6f, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
