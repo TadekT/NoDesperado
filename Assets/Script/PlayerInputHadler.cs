@@ -71,8 +71,8 @@ public class PlayerInputHadler : MonoBehaviour
         moveAction.performed += context => MoveInput = context.ReadValue<Vector2>();
         moveAction.canceled += context => MoveInput = Vector2.zero;
 
-        lookAction.performed += context => MoveInput = context.ReadValue<Vector2>();
-        lookAction.canceled += context => MoveInput = Vector2.zero;
+        lookAction.performed += context => LookInput = context.ReadValue<Vector2>();
+        lookAction.canceled += context => LookInput = Vector2.zero;
 
         jumpAction.performed += context => JumpTriggered = true;
         jumpAction.canceled += context => JumpTriggered = false;

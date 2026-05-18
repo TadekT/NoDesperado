@@ -1,35 +1,54 @@
+using System;
 using UnityEngine;
 
+// komponenty wymagane do działania skryptu
 [RequireComponent(typeof(EnemyAI_Movement))]
-[RequireComponent(typeof(EnemyAI_Movement))]
+[RequireComponent(typeof(EnemyAI_Vision))]
 
 public class EnemyAI_Brain : MonoBehaviour
 {
 
-        
-    private enum EnemyState
+    public event Action<EnemyState,EnemyState> OnSuspiciousState;
+    public event Action<EnemyState,EnemyState> OnChaseState;
+
+    // prosty enum state trzymający wszystkie stany przeciwnika AI
+    public enum EnemyState
     {
         None, Idle, Patrol, Suspicious, Chase, Attack, Search
     }
+   
+    //Zmienna przechowójąca obacnie działający stan
     [SerializeField] private EnemyState currentState = EnemyState.None;
+    
+    //Zmienna przechowójąca poprzednio działający stan
     [SerializeField] private EnemyState previousState;
 
-
+    //Referencja do skryptu EnemyAI_Movement, aby sterować poruszaniem sie przeciwnika AI
     [SerializeField] private EnemyAI_Movement movement;
+
+    //Referencja do skryptu EnemyAI_Vision, aby odczytywać dane z wizji przeciwnika AI
     [SerializeField] private EnemyAI_Vision vision;
 
+
     [Header("Idle")]
+    //Zmienna określająca wartość długości stanu idle, odliczany poprzes porównanie z stateTimer 
     [SerializeField] private float idleDuration = 2f;
 
 
+    [Header("Suspicious")]
+    [SerializeField] private float suspiciousDuration = 2f;
+
+    // Ogólny licznik do odczytania Time.deltatime, do zerowania i sterowania TickStatem
     [SerializeField] private float stateTimer;
 
-
+    // transform Playera 
     private Transform target;
+
+    // ostatnia znana pozycja gracza, do urzytku w TickState chase
     private Vector3 lastKnownPlayerPosition;
 
     
-
+    //Sprawdzanie poprawności przypisania referencji
     private void Awake()
     {
 
@@ -46,7 +65,7 @@ public class EnemyAI_Brain : MonoBehaviour
 
     }
 
-
+    // Start, do wyjścia ze stanu EnemyState.None
     private void Start()
     {
         if(movement.HasWyapoints)
@@ -70,6 +89,7 @@ public class EnemyAI_Brain : MonoBehaviour
 
         UpdateVisionData();
     }
+    
     
     private void UpdateVisionData()
     {
@@ -95,8 +115,8 @@ public class EnemyAI_Brain : MonoBehaviour
         currentState = nextState;
         
         EnterState(nextState);
-
-        
+        OnSuspiciousState?.Invoke(previousState,currentState);
+        OnChaseState?.Invoke(previousState,currentState);
     }
     
     
@@ -133,7 +153,7 @@ public class EnemyAI_Brain : MonoBehaviour
             case EnemyState.Patrol:
                 if (movement.HasWyapoints)
                 {
-                    movement.SetNextPatrolDestination();
+                    movement.MoveTo(movement.CurrentWaypoint());
                 }
                 break;
                 
@@ -152,6 +172,11 @@ public class EnemyAI_Brain : MonoBehaviour
         switch(state)
         {
             case EnemyState.Idle:
+            
+                break;
+
+            case EnemyState.Suspicious:
+                
                 break;
         }
     }
@@ -186,7 +211,8 @@ public class EnemyAI_Brain : MonoBehaviour
         }
         // jeśli dotarłem do waypointa to przechodze w TickIdle
         if (movement.HasReachedDestination())
-        {
+        {   
+            movement.SetNextPatrolDestination();
             ChangeState(EnemyState.Idle);
         }
     }
@@ -195,11 +221,16 @@ public class EnemyAI_Brain : MonoBehaviour
     // jeśli jestem w TickSuspicious i przestaje widziec gracza to wracam do patrolu
     private void TickSuspicious()
     {
+        
+        if(suspiciousDuration <= stateTimer)
+        {
+            ChangeState(EnemyState.Chase);
+        }
         if (!CanSeePlayer())
         {
             ChangeState(EnemyState.Patrol);
         }
-
+        
     }
 
     private bool CanSeePlayer()

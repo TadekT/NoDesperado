@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class EnemyAI_Movement : MonoBehaviour
 {   
-
+    // lista waypointów
     [Header("Waypoints list")]
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     
@@ -19,6 +19,7 @@ public class EnemyAI_Movement : MonoBehaviour
     [SerializeField] private float waypointReachedThreshold = 0.15f;
     
     [SerializeField] private int currentWaypointIndex = 0;
+    [SerializeField] private Vector3 currentWaypointPosition;
 
     public bool HasWyapoints => waypoints != null && waypoints.Count > 0;
 
@@ -37,17 +38,16 @@ public class EnemyAI_Movement : MonoBehaviour
         if(_agent == null)
             return;
 
-        Resume();
-
-        Transform waypoint = waypoints[currentWaypointIndex];
-        _agent.SetDestination(waypoint.position);
-
         currentWaypointIndex++;
         currentWaypointIndex %= waypoints.Count;
-    
     }
 
-
+    public Vector3 CurrentWaypoint()
+    {
+        Transform waypoint = waypoints[currentWaypointIndex];
+        currentWaypointPosition = waypoint.position;
+        return currentWaypointPosition;
+    }
     public void MoveTo(Vector3 position)
     {
         if(_agent == null) return;

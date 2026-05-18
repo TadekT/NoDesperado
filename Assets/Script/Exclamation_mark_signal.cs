@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Question_mark_Signal : MonoBehaviour
+public class Exclamation_mark_signal : MonoBehaviour
 {
     [SerializeField] private EnemyAI_Brain enemyAI_Brain;
     [SerializeField] private MeshRenderer meshRenderer;
@@ -8,7 +8,7 @@ public class Question_mark_Signal : MonoBehaviour
     private AudioSource audioSource;
 
     //bools variable
-    private bool hasPlayedSuspiceSound = false;
+    private bool hasPlayedChaseSound = false;
     
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class Question_mark_Signal : MonoBehaviour
     {
         if(enemyAI_Brain != null)
         {
-            enemyAI_Brain.OnSuspiciousState += HandleSuspiciousState;
+            enemyAI_Brain.OnChaseState += HandleChaseState;
         }   
 
     }
@@ -38,46 +38,47 @@ public class Question_mark_Signal : MonoBehaviour
     {
         if(enemyAI_Brain != null)
         {
-            enemyAI_Brain.OnSuspiciousState -= HandleSuspiciousState;
+            enemyAI_Brain.OnChaseState -= HandleChaseState;
         }  
 
     }
 
-    private void ShowQuestionMark()
+    private void ShowExclamationMark()
     {
-        Debug.Log("Pokazuje pytajnik");
+        Debug.Log("Pokazuje Wykrzyknik");
         meshRenderer.enabled = true;
-        if (!hasPlayedSuspiceSound)
+        if (!hasPlayedChaseSound)
         {
-            PlaySuspiceSound();
-            hasPlayedSuspiceSound = true;
+            PlayChaseSound();
+            hasPlayedChaseSound = true;
         }
 
     }
 
 
-    private void HideQuestionMark()
+    private void HideExclamationMark()
     {
         meshRenderer.enabled = false;
-        hasPlayedSuspiceSound = false;
-        Debug.Log("Chowam Question Mark");
+        hasPlayedChaseSound = false;
+        Debug.Log("Chowam Wykrzyknik");
     }
 
-    private void PlaySuspiceSound()
+    private void PlayChaseSound()
     {
         audioSource.PlayOneShot(audioSource.clip);
     }
 
-    private void HandleSuspiciousState(EnemyAI_Brain.EnemyState previusState, EnemyAI_Brain.EnemyState currentState)
+    private void HandleChaseState(EnemyAI_Brain.EnemyState previusState, EnemyAI_Brain.EnemyState currentState)
     {
-        if(currentState == EnemyAI_Brain.EnemyState.Suspicious)
+        if(currentState == EnemyAI_Brain.EnemyState.Chase)
         {
-            ShowQuestionMark();
+            ShowExclamationMark();
         }
-        else if(previusState == EnemyAI_Brain.EnemyState.Suspicious)
+        else if(previusState == EnemyAI_Brain.EnemyState.Chase)
         {
-            HideQuestionMark();
+            HideExclamationMark();
         }
     }
 
 }
+
