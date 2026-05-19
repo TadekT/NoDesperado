@@ -31,8 +31,6 @@ public class EnemyAI_Movement : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    
-
     public void SetNextPatrolDestination()
     {
         if (!HasWaypoints) 

@@ -25,24 +25,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "7ca10875-cf64-4374-b22e-2dc1ff2ed04a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Sprint",
-                    "type": "Button",
-                    "id": "9c56661e-6123-4538-9d2a-fb1996b22c10",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Point",
                     "type": "Value",
                     "id": "787ade4d-b960-45f1-a46e-14fdb624ee81",
@@ -59,6 +41,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "54f2aac0-7f05-403d-ae5b-c20c4bd2c6a1",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "9e8db6ac-220f-4f03-bf34-dce622646580",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -151,24 +151,46 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "321ca138-660c-4a10-b1f5-5f69bfb6645c",
-                    "path": "<Keyboard>/space",
+                    "name": "1D Axis",
+                    "id": "34fdbbd4-4553-425a-9063-51f63faf5db7",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
+                    "action": "Rotate",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "6444adc3-9ebd-4a1b-a386-a09ee395397b",
-                    "path": "<Keyboard>/leftShift",
+                    "name": "positive",
+                    "id": "cd572f3f-d766-45d7-aa04-68e2b6754c50",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sprint",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "8373f70d-8213-4717-a857-94ebc6c84ac5",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8228ce9f-7459-4d74-b264-40b4194e8a4c",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1658,6 +1658,12 @@ MonoBehaviour:
   zoomSpeed: 10
   minZoom: 10
   maxZoom: 30
+  moveAction: {fileID: -3034881865187500201, guid: 80befdcdc641ccb4a979d606d4c1611d,
+    type: 3}
+  rotateAction: {fileID: -2285915589340080654, guid: 80befdcdc641ccb4a979d606d4c1611d,
+    type: 3}
+  zoomAction: {fileID: -310730111948190139, guid: 80befdcdc641ccb4a979d606d4c1611d,
+    type: 3}
 --- !u!4 &1434509080
 Transform:
   m_ObjectHideFlags: 0

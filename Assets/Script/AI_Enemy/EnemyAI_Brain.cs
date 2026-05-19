@@ -44,7 +44,7 @@ public class EnemyAI_Brain : MonoBehaviour
     private Transform target;
 
     // ostatnia znana pozycja gracza, do urzytku w TickState chase
-    private Vector3 lastKnownPlayerPosition;
+    
 
     
     //Sprawdzanie poprawności przypisania referencji
@@ -98,7 +98,6 @@ public class EnemyAI_Brain : MonoBehaviour
         if (vision.CanSeePlayer && vision.PlayerTransform != null)
         {
             target = vision.PlayerTransform;
-            lastKnownPlayerPosition = target.position;
         }
     }
 
@@ -244,11 +243,11 @@ public class EnemyAI_Brain : MonoBehaviour
     {
         if (CanSeePlayer())
         {
-            movement.MoveTo(lastKnownPlayerPosition);
+            movement.MoveTo(vision.LastKnownPlayerPosition);
         }
         else
         {
-            movement.MoveTo(lastKnownPlayerPosition);
+            movement.MoveTo(vision.LastKnownPlayerPosition);
             if (movement.HasReachedDestination())
             {
                 ChangeState(EnemyState.Patrol);
