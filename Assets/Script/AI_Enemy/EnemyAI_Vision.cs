@@ -38,18 +38,15 @@ public class EnemyAI_Vision : MonoBehaviour
             eyes = transform;
         } 
         
-    }
-
-    private void Start()
-    {
-
         if(playerTransform == null)
         {
             GameObject _playerGO = GameObject.FindGameObjectWithTag("Player");
             playerTransform = _playerGO.transform;
         }  
+
         
     }
+
     private void Update()
     {
         scanTimer -= Time.deltaTime;
@@ -64,7 +61,7 @@ public class EnemyAI_Vision : MonoBehaviour
     #region Sphere Scan 
     private void SphereScanForPlayer()
     {
-        Physics.SyncTransforms();
+        // Physics.SyncTransforms();
         
         int hits = Physics.OverlapSphereNonAlloc(
             transform.position,

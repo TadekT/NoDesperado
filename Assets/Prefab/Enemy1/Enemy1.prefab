@@ -172,7 +172,7 @@ MonoBehaviour:
   movement: {fileID: 7928188875767749447}
   vision: {fileID: 1079906337851234722}
   idleDuration: 2
-  suspiciousDuration: 5
+  suspiciousDuration: 3
   stateTimer: 0
 --- !u!114 &7928188875767749447
 MonoBehaviour:
@@ -189,7 +189,8 @@ MonoBehaviour:
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  walkSpeed: 3
+  runSpeed: 4
   waypointReachedThreshold: 0.15
   currentWaypointIndex: 0
   currentWaypointPosition: {x: 0, y: 0, z: 0}

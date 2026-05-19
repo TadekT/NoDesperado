@@ -67,7 +67,7 @@ public class EnemyAI_Brain : MonoBehaviour
     // Start, do wyjścia ze stanu EnemyState.None
     private void Start()
     {
-        if(movement.HasWyapoints)
+        if(movement.HasWaypoints)
         {
             ChangeState(EnemyState.Patrol);
         }
@@ -154,8 +154,9 @@ public class EnemyAI_Brain : MonoBehaviour
                 break;
 
             case EnemyState.Patrol:
-                if (movement.HasWyapoints)
+                if (movement.HasWaypoints)
                 {
+                    movement.Walk();
                     movement.MoveTo(movement.CurrentWaypoint());
                 }
                 break;
@@ -164,7 +165,8 @@ public class EnemyAI_Brain : MonoBehaviour
                 break;
         
             case EnemyState.Chase:
-            break;
+                movement.Run();
+                break;
 
         }
     }
@@ -209,7 +211,7 @@ public class EnemyAI_Brain : MonoBehaviour
             return;
         }
         //jeśli nie posiadam waypointa to przechodze w TickIdle
-        if (!movement.HasWyapoints)
+        if (!movement.HasWaypoints)
         {
             ChangeState(EnemyState.Idle);
             return;
@@ -227,13 +229,13 @@ public class EnemyAI_Brain : MonoBehaviour
     private void TickSuspicious()
     {
         
-        if(suspiciousDuration <= stateTimer)
-        {
-            ChangeState(EnemyState.Chase);
-        }
         if (!CanSeePlayer())
         {
             ChangeState(EnemyState.Patrol);
+        }
+        if(suspiciousDuration <= stateTimer)
+        {
+            ChangeState(EnemyState.Chase);
         }
         
     }
@@ -246,7 +248,11 @@ public class EnemyAI_Brain : MonoBehaviour
         }
         else
         {
-            ChangeState(EnemyState.Patrol);
+            movement.MoveTo(lastKnownPlayerPosition);
+            if (movement.HasReachedDestination())
+            {
+                ChangeState(EnemyState.Patrol);
+            }
         }
     }
 

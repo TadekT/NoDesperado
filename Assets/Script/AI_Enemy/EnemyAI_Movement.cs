@@ -16,12 +16,14 @@ public class EnemyAI_Movement : MonoBehaviour
 
 
     [Header("Transitions")]
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float runSpeed;
     [SerializeField] private float waypointReachedThreshold = 0.15f;
     
     [SerializeField] private int currentWaypointIndex = 0;
     [SerializeField] private Vector3 currentWaypointPosition;
 
-    public bool HasWyapoints => waypoints != null && waypoints.Count > 0;
+    public bool HasWaypoints => waypoints != null && waypoints.Count > 0;
 
 
     private void Awake()
@@ -33,7 +35,7 @@ public class EnemyAI_Movement : MonoBehaviour
 
     public void SetNextPatrolDestination()
     {
-        if (!HasWyapoints) 
+        if (!HasWaypoints) 
             return;
         if(_agent == null)
             return;
@@ -57,14 +59,18 @@ public class EnemyAI_Movement : MonoBehaviour
     
     }
 
+    
+
+
+
     public void Walk()
     {
-        _agent.speed = 3;
+        _agent.speed = walkSpeed;
     }
 
     public void Run()
     {
-        _agent.speed = 4;
+        _agent.speed = runSpeed;
     }
 
     public void Stop()
