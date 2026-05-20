@@ -108,9 +108,9 @@ public class EnemyAI_Movement : MonoBehaviour
     }
 
 
-    public void MoveToRandomPosition()
+    public void MoveToRandomPosition(Vector3 center)
     {
-        Vector3 randomPosition = RandomNavMeshPosition();
+        Vector3 randomPosition = RandomNavMeshPosition(center);
         if(randomPosition == Vector3.zero)
         {
             return;
@@ -122,12 +122,12 @@ public class EnemyAI_Movement : MonoBehaviour
         }
     }
 
-    public Vector3 RandomNavMeshPosition()
+    public Vector3 RandomNavMeshPosition(Vector3 lastKnown)
     {
         
         Vector3 randomPosition =  Random.insideUnitSphere * randomSearchRadius;
 
-        randomPosition += transform.position;
+        randomPosition += lastKnown;
         
         Vector3 finalePosition = Vector3.zero;
         

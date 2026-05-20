@@ -179,7 +179,7 @@ public class EnemyAI_Brain : MonoBehaviour
                 break;
 
             case EnemyState.Search:
-                movement.MoveToRandomPosition();
+                movement.MoveToRandomPosition(lastKnownPosition);
                 break;
 
         }
@@ -290,7 +290,7 @@ public class EnemyAI_Brain : MonoBehaviour
             }
             else
             {
-                movement.MoveToRandomPosition();
+                movement.MoveToRandomPosition(lastKnownPosition);
             }
 
 
