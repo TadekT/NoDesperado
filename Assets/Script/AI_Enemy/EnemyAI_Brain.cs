@@ -299,8 +299,6 @@ public class EnemyAI_Brain : MonoBehaviour
 
     }
 
-
-
     private bool CanSeePlayer()
     {
         return vision != null &&

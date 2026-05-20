@@ -173,6 +173,7 @@ MonoBehaviour:
   vision: {fileID: 1079906337851234722}
   idleDuration: 2
   suspiciousDuration: 3
+  maxRandomSearchPoints: 5
   stateTimer: 0
 --- !u!114 &7928188875767749447
 MonoBehaviour:
@@ -192,6 +193,7 @@ MonoBehaviour:
   walkSpeed: 3
   runSpeed: 4
   waypointReachedThreshold: 0.15
+  randomSearchRadius: 4
   currentWaypointIndex: 0
   currentWaypointPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1079906337851234722

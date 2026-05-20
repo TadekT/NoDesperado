@@ -111,15 +111,11 @@ public class EnemyAI_Movement : MonoBehaviour
     public void MoveToRandomPosition(Vector3 center)
     {
         Vector3 randomPosition = RandomNavMeshPosition(center);
-        if(randomPosition == Vector3.zero)
-        {
-            return;
-        }
+        
+        if(randomPosition == Vector3.zero) return;
 
-        if(randomPosition != Vector3.zero)
-        {
-            MoveTo(randomPosition);
-        }
+        MoveTo(randomPosition);
+    
     }
 
     public Vector3 RandomNavMeshPosition(Vector3 lastKnown)
