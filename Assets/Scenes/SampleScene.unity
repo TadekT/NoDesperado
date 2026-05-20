@@ -1652,7 +1652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cinemachineVirtualCamera: {fileID: 212535634}
-  moveSpeed: 10
+  moveSpeed: 30
   rotateSpeed: 100
   zoomAmount: 1
   zoomSpeed: 10
@@ -2166,6 +2166,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7306128240489289470, guid: f6b82e538a0ffa541880ff2e90190335,
+        type: 3}
+      propertyPath: maxRandomSearchPoints
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7928188875767749447, guid: f6b82e538a0ffa541880ff2e90190335,
         type: 3}

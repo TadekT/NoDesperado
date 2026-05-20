@@ -63,6 +63,7 @@ public class EnemyAI_Vision : MonoBehaviour
     {
         // Physics.SyncTransforms();
         
+        //przeszukanie w OverlapSphereNonAlloc poszukując playera przy pomocy playerLayer
         int hits = Physics.OverlapSphereNonAlloc(
             transform.position,
             viewRadius ,
@@ -71,6 +72,7 @@ public class EnemyAI_Vision : MonoBehaviour
             QueryTriggerInteraction.Ignore
             );
         
+
         for(int i = 0; i < hits; i++)
         {
             Transform candidate = _hitColliders[i].transform;
@@ -87,6 +89,7 @@ public class EnemyAI_Vision : MonoBehaviour
 
         CanSeePlayer = false;
         PlayerTransform = null;
+
     }
 #endregion
 
@@ -111,7 +114,12 @@ public class EnemyAI_Vision : MonoBehaviour
 
         if (angleToTarget > viewAngle / 2f)
             return false;
-
+        
+        /*
+        Sprawdzamy czy wystrzelony Raycast trafi w obstacleLayerMask(przeszkody zaznaczone w insprzktorze jako LayerMask)
+        jeśli blockedByObstacle = true to cała funkcja IsTargetVisible zwraca fail
+        jeśli blockedByObstacle = false to cała funkcja IsTargetVisible zwraca fail
+        */ 
         bool blockedByObstacle = Physics.Raycast(
             origin,
             directionToTarget.normalized,
@@ -126,7 +134,7 @@ public class EnemyAI_Vision : MonoBehaviour
 
  
 
-
+// gizmos'y do debugu 
 #region OnDrawGizmos
     private void OnDrawGizmos()
     {

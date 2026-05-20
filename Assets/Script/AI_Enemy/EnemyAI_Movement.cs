@@ -20,6 +20,12 @@ public class EnemyAI_Movement : MonoBehaviour
     [SerializeField] private float runSpeed;
     [SerializeField] private float waypointReachedThreshold = 0.15f;
     
+    [Header("Radndom NavMeshSamples Setting")]
+    [SerializeField] private float randomSearchRadius = 4f;
+
+
+
+    [Header("Current waypoints debug")]
     [SerializeField] private int currentWaypointIndex = 0;
     [SerializeField] private Vector3 currentWaypointPosition;
 
@@ -57,10 +63,6 @@ public class EnemyAI_Movement : MonoBehaviour
     
     }
 
-    
-
-
-
     public void Walk()
     {
         _agent.speed = walkSpeed;
@@ -79,7 +81,6 @@ public class EnemyAI_Movement : MonoBehaviour
         _agent.ResetPath();
     
     }
-    
 
     public void Resume()
     {
@@ -106,6 +107,39 @@ public class EnemyAI_Movement : MonoBehaviour
     
     }
 
+
+    public void MoveToRandomPosition()
+    {
+        Vector3 randomPosition = RandomNavMeshPosition();
+        if(randomPosition == Vector3.zero)
+        {
+            return;
+        }
+
+        if(randomPosition != Vector3.zero)
+        {
+            MoveTo(randomPosition);
+        }
+    }
+
+    public Vector3 RandomNavMeshPosition()
+    {
+        
+        Vector3 randomPosition =  Random.insideUnitSphere * randomSearchRadius;
+
+        randomPosition += transform.position;
+        
+        Vector3 finalePosition = Vector3.zero;
+        
+        NavMeshHit hit;
+        if(NavMesh.SamplePosition(randomPosition,out hit, randomSearchRadius, 1))
+        {
+            finalePosition = hit.position;
+        }
+
+        return finalePosition ;
+
+    }
 
 
 }

@@ -37,6 +37,11 @@ public class EnemyAI_Brain : MonoBehaviour
     [Header("Suspicious")]
     [SerializeField] private float suspiciousDuration = 2f;
 
+    [Header("Search")]
+    [SerializeField] private int maxRandomSearchPoints = 2;
+    private int searchPointsVisited = 0;
+
+    [Header("State timer for debug")]
     // Ogólny licznik do odczytania Time.deltatime, do zerowania i sterowania TickStatem
     [SerializeField] private float stateTimer;
 
@@ -44,7 +49,7 @@ public class EnemyAI_Brain : MonoBehaviour
     private Transform target;
 
     // ostatnia znana pozycja gracza, do urzytku w TickState chase
-    
+    private Vector3 lastKnownPosition; 
 
     
     //Sprawdzanie poprawności przypisania referencji
@@ -98,6 +103,7 @@ public class EnemyAI_Brain : MonoBehaviour
         if (vision.CanSeePlayer && vision.PlayerTransform != null)
         {
             target = vision.PlayerTransform;
+            lastKnownPosition = vision.LastKnownPlayerPosition;
         }
     }
 
@@ -115,7 +121,7 @@ public class EnemyAI_Brain : MonoBehaviour
         EnterState(nextState);
 
         OnChangeState?.Invoke(previousState,currentState);
-
+        
     }
     
     
@@ -137,6 +143,9 @@ public class EnemyAI_Brain : MonoBehaviour
             case EnemyState.Chase:
                 TickChase();
                 break;
+            case EnemyState.Search:
+                TickSearch();
+                break;
 
         }        
     }
@@ -153,18 +162,24 @@ public class EnemyAI_Brain : MonoBehaviour
                 break;
 
             case EnemyState.Patrol:
+
                 if (movement.HasWaypoints)
                 {
                     movement.Walk();
                     movement.MoveTo(movement.CurrentWaypoint());
                 }
                 break;
+
             case EnemyState.Suspicious:
                 movement.Stop();
                 break;
         
             case EnemyState.Chase:
                 movement.Run();
+                break;
+
+            case EnemyState.Search:
+                movement.MoveToRandomPosition();
                 break;
 
         }
@@ -184,11 +199,15 @@ public class EnemyAI_Brain : MonoBehaviour
             case EnemyState.Suspicious:
                 
                 break;
+           
+            case EnemyState.Search:
+                searchPointsVisited = 0;
+                break;
         }
     }
 
     // co sie tu dzieje :
-    // jeśli jestem w TickIdle to:
+    // jeśli jestem w TickIdle to: odliczam timer a potem patrol
     private void TickIdle()
     {
         //oczekauje aż timer(stoper) osiągnie swoją wartość
@@ -243,17 +262,44 @@ public class EnemyAI_Brain : MonoBehaviour
     {
         if (CanSeePlayer())
         {
-            movement.MoveTo(vision.LastKnownPlayerPosition);
+            movement.MoveTo(target.position);
         }
         else
         {
             movement.MoveTo(vision.LastKnownPlayerPosition);
             if (movement.HasReachedDestination())
             {
-                ChangeState(EnemyState.Patrol);
+                ChangeState(EnemyState.Search);
             }
         }
     }
+
+    private void TickSearch()
+    {       
+        if (CanSeePlayer())
+        {
+            ChangeState(EnemyState.Chase);
+        }
+
+        if (movement.HasReachedDestination())
+        {
+            searchPointsVisited++;
+            if(searchPointsVisited >= maxRandomSearchPoints)
+            {
+                ChangeState(EnemyState.Patrol);
+            }
+            else
+            {
+                movement.MoveToRandomPosition();
+            }
+
+
+        }
+
+
+    }
+
+
 
     private bool CanSeePlayer()
     {
