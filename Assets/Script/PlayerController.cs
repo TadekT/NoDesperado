@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("References")]
     [SerializeField] private NavMeshAgent agent;
-    
+    [SerializeField] private Camera _camera;
     
     [SerializeField] private LayerMask groundlayer;
 
@@ -20,9 +20,11 @@ public class PlayerController : MonoBehaviour
         if(agent == null)
         {
             agent = GetComponent<NavMeshAgent>();
-            Debug.Log("NavMeshAgent component not assigned, trying to get it from the GameObject.");
         }
-
+        if(_camera == null)
+        {
+            _camera = Camera.main;
+        }
 
 
     }
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 getMouseWorldPosition()
     {
         mouse_position = Mouse.current.position.ReadValue();
-        Ray ray = Camera.main.ScreenPointToRay(mouse_position);
+        Ray ray = _camera.ScreenPointToRay(mouse_position);
         if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, groundlayer))
         {
             //Debug.Log("Hit: " + hit.point);

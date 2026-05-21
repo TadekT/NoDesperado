@@ -53,9 +53,6 @@ public class EnemyAI_Brain : MonoBehaviour
     // Ogólny licznik do odczytania Time.deltatime, do zerowania i sterowania TickStatem
     [SerializeField] private float stateTimer;
 
-    // transform Playera 
-    private Transform target;
-
     // ostatnia znana pozycja gracza, do urzytku w TickState chase
     private Vector3 lastKnownPosition; 
 
@@ -69,7 +66,6 @@ public class EnemyAI_Brain : MonoBehaviour
             movement = GetComponent<EnemyAI_Movement>();
         }
         
-
         if(vision == null)
         {
             vision = GetComponent<EnemyAI_Vision>();
@@ -102,9 +98,9 @@ public class EnemyAI_Brain : MonoBehaviour
     {
         stateTimer += Time.deltaTime;
 
+        UpdateVisionData();
         TickState(currentState);
 
-        UpdateVisionData();
     }
     
     
@@ -115,7 +111,6 @@ public class EnemyAI_Brain : MonoBehaviour
 
         if (vision.CanSeePlayer && vision.PlayerTransform != null)
         {
-            target = vision.PlayerTransform;
             lastKnownPosition = vision.LastKnownPlayerPosition;
         }
     }
@@ -198,7 +193,10 @@ public class EnemyAI_Brain : MonoBehaviour
                 break;
 
             case EnemyState.Search:
-                movement.MoveToRandomPosition(lastKnownPosition);
+                if (lastKnownPosition != Vector3.zero)
+                {
+                    movement.MoveToRandomPosition(lastKnownPosition);
+                }
                 break;
 
             case EnemyState.Attack:
@@ -290,7 +288,7 @@ public class EnemyAI_Brain : MonoBehaviour
         }
         if (CanSeePlayer())
         {
-            movement.MoveTo(target.position);
+            movement.MoveTo(vision.PlayerTransform.position);
         }
         else
         {
@@ -307,6 +305,7 @@ public class EnemyAI_Brain : MonoBehaviour
         if (CanSeePlayer())
         {
             ChangeState(EnemyState.Chase);
+            return;
         }
 
         if (movement.HasReachedDestination())

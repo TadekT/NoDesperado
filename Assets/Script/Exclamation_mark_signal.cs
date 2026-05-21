@@ -65,6 +65,7 @@ public class Exclamation_mark_signal : MonoBehaviour
 
     private void PlayChaseSound()
     {
+        if(audioSource == null) return;
         audioSource.PlayOneShot(audioSource.clip);
     }
 

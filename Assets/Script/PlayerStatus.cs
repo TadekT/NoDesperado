@@ -19,7 +19,7 @@ public class PlayerStatus : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
+        currentHealth = Mathf.Max(0,currentHealth - amount);
 
         if (IsDead())
         {

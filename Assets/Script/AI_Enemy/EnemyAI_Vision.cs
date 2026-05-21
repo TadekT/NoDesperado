@@ -41,7 +41,10 @@ public class EnemyAI_Vision : MonoBehaviour
         if(playerTransform == null)
         {
             GameObject _playerGO = GameObject.FindGameObjectWithTag("Player");
-            playerTransform = _playerGO.transform;
+            if(_playerGO != null)
+            {
+                playerTransform = _playerGO.transform;
+            }
         }  
 
         
@@ -118,7 +121,7 @@ public class EnemyAI_Vision : MonoBehaviour
         /*
         Sprawdzamy czy wystrzelony Raycast trafi w obstacleLayerMask(przeszkody zaznaczone w insprzktorze jako LayerMask)
         jeśli blockedByObstacle = true to cała funkcja IsTargetVisible zwraca fail
-        jeśli blockedByObstacle = false to cała funkcja IsTargetVisible zwraca fail
+        jeśli blockedByObstacle = false to cała funkcja IsTargetVisible zwraca true
         */ 
         bool blockedByObstacle = Physics.Raycast(
             origin,

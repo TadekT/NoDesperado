@@ -65,6 +65,7 @@ public class Question_mark_Signal : MonoBehaviour
 
     private void PlaySuspiceSound()
     {
+        if(audioSource == null) return;
         audioSource.PlayOneShot(audioSource.clip);
     }
 

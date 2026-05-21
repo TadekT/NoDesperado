@@ -5,9 +5,9 @@ public class EnemyAI_Combat : MonoBehaviour
 
     [SerializeField] private OnTriggerEnterCombatDetection combatTrigger;
     [SerializeField] private int damage = 10;
-    private IDamageable curretTargget;
+    private IDamageable currentTarget;
 
-    public bool IsPlayerInAttackRange => curretTargget != null;
+    public bool IsPlayerInAttackRange => currentTarget!= null;
 
     private void Awake()
     {
@@ -33,18 +33,19 @@ public class EnemyAI_Combat : MonoBehaviour
         {
             combatTrigger.InAttackRange -= HandleCombatSignal;
         }
+        currentTarget= null;
     }
 
     private void HandleCombatSignal(IDamageable target)
     {
-        curretTargget = target;
+        currentTarget= target;
 
     }
 
     public void Attack()
     {
-        if(curretTargget == null ) return;
-        curretTargget.TakeDamage(damage);
+        if(currentTarget== null ) return;
+        currentTarget.TakeDamage(damage);
     }
 
 }
