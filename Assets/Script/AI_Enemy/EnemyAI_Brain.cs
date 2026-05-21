@@ -23,12 +23,14 @@ public class EnemyAI_Brain : MonoBehaviour
     //Zmienna przechowójąca poprzednio działający stan
     [SerializeField] private EnemyState previousState;
 
+
     //Referencja do skryptu EnemyAI_Movement, aby sterować poruszaniem sie przeciwnika AI
     [SerializeField] private EnemyAI_Movement movement;
 
     //Referencja do skryptu EnemyAI_Vision, aby odczytywać dane z wizji przeciwnika AI
     [SerializeField] private EnemyAI_Vision vision;
     [SerializeField] private EnemyAI_Combat combat;
+
 
     [Header("Idle")]
     //Zmienna określająca wartość długości stanu idle, odliczany poprzes porównanie z stateTimer 
@@ -40,6 +42,11 @@ public class EnemyAI_Brain : MonoBehaviour
 
     [Header("Search")]
     [SerializeField] private int maxRandomSearchPoints = 2;
+
+    [Header("Attack")]
+    [SerializeField] private float attackCooldown = 1f;
+
+
     private int searchPointsVisited = 0;
 
     [Header("State timer for debug")]
@@ -68,7 +75,7 @@ public class EnemyAI_Brain : MonoBehaviour
             vision = GetComponent<EnemyAI_Vision>();
         }
 
-        if(vision == null)
+        if(combat == null)
         {
             combat = GetComponent<EnemyAI_Combat>();
         }
@@ -146,11 +153,17 @@ public class EnemyAI_Brain : MonoBehaviour
             case EnemyState.Suspicious:
                 TickSuspicious();
                 break;
+            
             case EnemyState.Chase:
                 TickChase();
                 break;
+            
             case EnemyState.Search:
                 TickSearch();
+                break;
+            
+            case EnemyState.Attack:
+                TickAttack();
                 break;
 
         }        
@@ -188,6 +201,9 @@ public class EnemyAI_Brain : MonoBehaviour
                 movement.MoveToRandomPosition(lastKnownPosition);
                 break;
 
+            case EnemyState.Attack:
+                
+                break;
         }
     }
 
@@ -267,6 +283,11 @@ public class EnemyAI_Brain : MonoBehaviour
 
     private void TickChase()
     {
+        if (combat.IsPlayerInAttackRange)
+        {
+            ChangeState(EnemyState.Attack);
+            return;
+        }
         if (CanSeePlayer())
         {
             movement.MoveTo(target.position);
@@ -299,11 +320,24 @@ public class EnemyAI_Brain : MonoBehaviour
             {
                 movement.MoveToRandomPosition(lastKnownPosition);
             }
+        }
+    }
 
-
+    private void TickAttack()
+    {
+        // gracz wyszedł z zasięgu — wróć do Chase
+        if (!combat.IsPlayerInAttackRange)
+        {
+            ChangeState(EnemyState.Chase);
+            return;
         }
 
-
+        // bij co attackCooldown sekund
+        if (stateTimer >= attackCooldown)
+        {
+            combat.Attack();
+            stateTimer = 0f;
+        }
     }
 
     private bool CanSeePlayer()

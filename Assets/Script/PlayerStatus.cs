@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatus : MonoBehaviour
+public class PlayerStatus : MonoBehaviour, IDamageable
 {
 
     [SerializeField] private int maxHealth = 100; 
 
 
-    private int currentHealth;
+    [SerializeField]  private int currentHealth;
 
     void Awake()
     {
