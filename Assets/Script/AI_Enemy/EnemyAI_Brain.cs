@@ -4,6 +4,7 @@ using UnityEngine;
 // komponenty wymagane do działania skryptu
 [RequireComponent(typeof(EnemyAI_Movement))]
 [RequireComponent(typeof(EnemyAI_Vision))]
+[RequireComponent(typeof(EnemyAI_Combat))]
 
 public class EnemyAI_Brain : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class EnemyAI_Brain : MonoBehaviour
 
     //Referencja do skryptu EnemyAI_Vision, aby odczytywać dane z wizji przeciwnika AI
     [SerializeField] private EnemyAI_Vision vision;
-
+    [SerializeField] private EnemyAI_Combat combat;
 
     [Header("Idle")]
     //Zmienna określająca wartość długości stanu idle, odliczany poprzes porównanie z stateTimer 
@@ -65,6 +66,11 @@ public class EnemyAI_Brain : MonoBehaviour
         if(vision == null)
         {
             vision = GetComponent<EnemyAI_Vision>();
+        }
+
+        if(vision == null)
+        {
+            combat = GetComponent<EnemyAI_Combat>();
         }
 
     }
@@ -247,9 +253,10 @@ public class EnemyAI_Brain : MonoBehaviour
     private void TickSuspicious()
     {
         
-        if (!CanSeePlayer())
+        if(!CanSeePlayer())
         {
-            ChangeState(EnemyState.Patrol);
+            ChangeState(EnemyState.Search);
+            return;
         }
         if(suspiciousDuration <= stateTimer)
         {
