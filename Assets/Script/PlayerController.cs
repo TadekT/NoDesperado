@@ -3,10 +3,6 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Vector3 mouse_position;
-
-    [SerializeField] private Vector3 mouse_world_position;
-    
     [Header("References")]
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Camera _camera;
@@ -44,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 getMouseWorldPosition()
     {
-        mouse_position = Mouse.current.position.ReadValue();
+        Vector3 mouse_position = Mouse.current.position.ReadValue();
         Ray ray = _camera.ScreenPointToRay(mouse_position);
         if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, groundlayer))
         {

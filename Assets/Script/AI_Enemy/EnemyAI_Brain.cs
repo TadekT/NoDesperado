@@ -212,8 +212,9 @@ public class EnemyAI_Brain : MonoBehaviour
     {
         switch(state)
         {
+            // pozostawione puste do przyszłościowego rozwoju
             case EnemyState.Idle:
-            
+
                 break;
 
             case EnemyState.Suspicious:
