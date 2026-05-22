@@ -50,8 +50,11 @@ public class EnemySignalDisplay : MonoBehaviour
         }
         else if (previous == triggerState)
         {
-            meshRenderer.enabled = false;
-            hasPlayedSound = false;
+            if(current != EnemyAI_Brain.EnemyState.Attack)
+                {
+                    meshRenderer.enabled = false;
+                    hasPlayedSound = false;
+                }
         }
     }
 }

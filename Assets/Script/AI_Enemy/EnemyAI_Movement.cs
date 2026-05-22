@@ -83,6 +83,17 @@ public class EnemyAI_Movement : MonoBehaviour
     
     }
 
+    public void ChaseDistance()
+    {
+        if(_agent == null) return;
+        _agent.stoppingDistance = 2f;    
+    }
+
+    public void PatrolDistance()
+    {
+        if(_agent == null) return;
+        _agent.stoppingDistance = 0.3f;    
+    }
     public void Resume()
     {
         if(_agent == null) return;

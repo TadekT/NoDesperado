@@ -23,7 +23,7 @@ public class EnemyAI_Vision : MonoBehaviour
     private Collider[] _hitColliders;
     private float scanTimer;
 
-
+    public bool IsAlerted{get ; set ;}
     public bool CanSeePlayer { get; private set; }
     public Transform PlayerTransform { get; private set; }
     public Vector3 LastKnownPlayerPosition { get; private set; }
@@ -113,11 +113,19 @@ public class EnemyAI_Vision : MonoBehaviour
         if (distanceToTarget > viewRadius)
             return false;
 
-        float angleToTarget = Vector3.Angle(eyes.forward, directionToTarget.normalized);
-
-        if (angleToTarget > viewAngle / 2f)
-            return false;
+        if (!IsAlerted)
+        {            
+            float angleToTarget = Vector3.Angle(eyes.forward, directionToTarget.normalized);
+            if (angleToTarget > viewAngle / 2f)
+                return false;
+        }
         
+        PlayerStatus playerStatus = target.GetComponent<PlayerStatus>();
+        if(playerStatus != null && playerStatus.IsHidden)
+        {
+            return false;
+        }
+
         /*
         Sprawdzamy czy wystrzelony Raycast trafi w obstacleLayerMask(przeszkody zaznaczone w insprzktorze jako LayerMask)
         jeśli blockedByObstacle = true to cała funkcja IsTargetVisible zwraca fail
@@ -144,15 +152,15 @@ public class EnemyAI_Vision : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position,viewRadius);
 
-
-        Vector3 forward = transform.forward * viewRadius;
+        Transform eyeRef = (eyes != null) ? eyes : transform;
+        Vector3 forward = eyeRef.forward * viewRadius;
         Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * forward;
         Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * forward;
         
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
-        Gizmos.DrawLine(transform.position + rightBoundary, transform.position + leftBoundary);
+        Gizmos.DrawLine(eyeRef.position, eyeRef.position + rightBoundary);
+        Gizmos.DrawLine(eyeRef.position, eyeRef.position + leftBoundary);
+        Gizmos.DrawLine(eyeRef.position + rightBoundary, eyeRef.position + leftBoundary);
 
     }
 #endregion
