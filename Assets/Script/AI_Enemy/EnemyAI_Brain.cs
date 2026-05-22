@@ -43,6 +43,9 @@ public class EnemyAI_Brain : MonoBehaviour
     [Header("Search")]
     [SerializeField] private int maxRandomSearchPoints = 2;
 
+    [Header("Chase")]
+    [SerializeField] private float minChaseDuration = 2f;
+
     [Header("Attack")]
     [SerializeField] private float attackCooldown = 1f;
 
@@ -178,7 +181,8 @@ public class EnemyAI_Brain : MonoBehaviour
             case EnemyState.Patrol:
 
                 if (movement.HasWaypoints)
-                {
+                {   
+                    movement.PatrolDistance();
                     movement.Walk();
                     movement.MoveTo(movement.CurrentWaypoint());
                 }
@@ -189,7 +193,9 @@ public class EnemyAI_Brain : MonoBehaviour
                 break;
         
             case EnemyState.Chase:
+                movement.ChaseDistance();
                 movement.Run();
+                vision.IsAlerted = true;
                 break;
 
             case EnemyState.Search:
@@ -200,7 +206,7 @@ public class EnemyAI_Brain : MonoBehaviour
                 break;
 
             case EnemyState.Attack:
-                
+                vision.IsAlerted = true;
                 break;
         }
     }
@@ -212,13 +218,9 @@ public class EnemyAI_Brain : MonoBehaviour
     {
         switch(state)
         {
-            // pozostawione puste do przyszłościowego rozwoju
-            case EnemyState.Idle:
 
-                break;
-
-            case EnemyState.Suspicious:
-                
+            case EnemyState.Chase:
+                vision.IsAlerted = false;
                 break;
            
             case EnemyState.Search:
@@ -294,7 +296,7 @@ public class EnemyAI_Brain : MonoBehaviour
         else
         {
             movement.MoveTo(vision.LastKnownPlayerPosition);
-            if (movement.HasReachedDestination())
+            if (movement.HasReachedDestination() && stateTimer >= minChaseDuration)
             {
                 ChangeState(EnemyState.Search);
             }

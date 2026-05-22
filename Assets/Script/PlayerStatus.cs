@@ -8,6 +8,10 @@ public class PlayerStatus : MonoBehaviour, IDamageable
 
     [SerializeField]  private int currentHealth;
 
+    public bool IsHidden {get ; private set;}
+
+
+
     void Awake()
     {
         
@@ -37,6 +41,9 @@ public class PlayerStatus : MonoBehaviour, IDamageable
         Debug.Log("Player is dead");
     }
 
-
+    public void SetHiddne(bool hidden)
+    {
+        IsHidden = hidden;
+    }
 
 }
