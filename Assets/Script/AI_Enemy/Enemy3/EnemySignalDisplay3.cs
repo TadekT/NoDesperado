@@ -28,13 +28,13 @@ public class EnemySignalDisplay3 : MonoBehaviour
             brain = GetComponentInParent<EnemyAI3_Brain>();
 
         if (brain != null)
-            brain.OnChangeState += HandleStateChange;
+            brain.OnChangeState3 += HandleStateChange;
     }
 
     private void OnDisable()
     {
         if (brain != null)
-            brain.OnChangeState -= HandleStateChange;
+            brain.OnChangeState3 -= HandleStateChange;
     }
 
     private void HandleStateChange(EnemyAI3_Brain.EnemyState previous, EnemyAI3_Brain.EnemyState current)

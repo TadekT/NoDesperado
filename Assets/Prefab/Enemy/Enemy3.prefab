@@ -338,7 +338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a06a27ee4cd644cb8e8150a943fe06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints: []
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
   walkSpeed: 2
   runSpeed: 4
   waypointReachedThreshold: 0.15
@@ -559,7 +561,7 @@ MonoBehaviour:
   brain: {fileID: 2107875374335263897}
   meshRenderer: {fileID: 4434870815057344266}
   audioSource: {fileID: 1780775603577169879}
-  triggerState: 0
+  triggerState: 3
 --- !u!23 &4434870815057344266 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 615323226806409838, guid: 62ab894bad630364fb44acbe22dac496,
@@ -671,7 +673,7 @@ MonoBehaviour:
   brain: {fileID: 2107875374335263897}
   meshRenderer: {fileID: 8835898860423023241}
   audioSource: {fileID: 1132344847630045652}
-  triggerState: 0
+  triggerState: 4
 --- !u!23 &8835898860423023241 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4861916320839479488, guid: 9f5a1ee640abe7e48be54c664ec078d5,

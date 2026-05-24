@@ -9,7 +9,7 @@ using UnityEngine;
 public class EnemyAI3_Brain : MonoBehaviour
 {
 
-    public event Action<EnemyState,EnemyState> OnChangeState;
+    public event Action<EnemyState,EnemyState> OnChangeState3;
 
     // prosty enum state trzymający wszystkie stany przeciwnika AI
     public enum EnemyState
@@ -131,7 +131,7 @@ public class EnemyAI3_Brain : MonoBehaviour
         
         EnterState(nextState);
 
-        OnChangeState?.Invoke(previousState,currentState);
+        OnChangeState3?.Invoke(previousState,currentState);
         
     }
     

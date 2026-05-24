@@ -1733,21 +1733,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 859370905030036024, guid: 56e024ae2faf0784eb3698defebe26f4,
-        type: 3}
-      propertyPath: bulletSpawn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 859370905030036024, guid: 56e024ae2faf0784eb3698defebe26f4,
-        type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3484672551802733971, guid: 56e024ae2faf0784eb3698defebe26f4,
         type: 3}
       propertyPath: m_Name
       value: Enemy3
       objectReference: {fileID: 0}
+    - target: {fileID: 6789842640749114318, guid: 56e024ae2faf0784eb3698defebe26f4,
+        type: 3}
+      propertyPath: waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2594155934567998228}
+    - target: {fileID: 6789842640749114318, guid: 56e024ae2faf0784eb3698defebe26f4,
+        type: 3}
+      propertyPath: waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 413637161}
     - target: {fileID: 6890702134599574188, guid: 56e024ae2faf0784eb3698defebe26f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1798,16 +1798,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7928188875767749447, guid: 56e024ae2faf0784eb3698defebe26f4,
+    - target: {fileID: 7807825039260644581, guid: 56e024ae2faf0784eb3698defebe26f4,
         type: 3}
-      propertyPath: waypoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 2594155934567998228}
-    - target: {fileID: 7928188875767749447, guid: 56e024ae2faf0784eb3698defebe26f4,
+      propertyPath: triggerState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8490052788441161823, guid: 56e024ae2faf0784eb3698defebe26f4,
         type: 3}
-      propertyPath: waypoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 413637161}
+      propertyPath: triggerState
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1986,7 +1986,7 @@ PrefabInstance:
     - target: {fileID: 6654789670785708183, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.24
+      value: 9.96
       objectReference: {fileID: 0}
     - target: {fileID: 6654789670785708183, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
@@ -1996,7 +1996,7 @@ PrefabInstance:
     - target: {fileID: 6654789670785708183, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.02
+      value: -2.34
       objectReference: {fileID: 0}
     - target: {fileID: 6654789670785708183, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
