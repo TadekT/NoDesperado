@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2626559934621723112}
   - component: {fileID: 615323226806409838}
   - component: {fileID: 3294197642481666739}
-  - component: {fileID: 5606116284091470625}
   m_Layer: 8
   m_Name: Question_mark
   m_TagString: Untagged
@@ -181,19 +180,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5606116284091470625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984917396381428340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c884207c58280a8488db3a5e30439204, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brain: {fileID: 0}
-  meshRenderer: {fileID: 615323226806409838}
-  audioSource: {fileID: 3294197642481666739}
-  triggerState: 3
