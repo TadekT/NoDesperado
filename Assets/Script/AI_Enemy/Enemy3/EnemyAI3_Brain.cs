@@ -207,6 +207,7 @@ public class EnemyAI3_Brain : MonoBehaviour
 
             case EnemyState.Attack:
                 vision.IsAlerted = true;
+                movement.Stop();
                 break;
         }
     }
