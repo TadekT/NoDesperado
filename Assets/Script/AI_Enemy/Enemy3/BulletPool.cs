@@ -28,21 +28,27 @@ public class BulletPool : MonoBehaviour
 
     public GameObject Get()
     {
+        GameObject bullet;
 
         if(pool.Count > 0)
         {
-            GameObject bullet = pool.Dequeue();
+            bullet = pool.Dequeue();
             bullet.SetActive(true);
-            return bullet;            
         }
+        else
+        {
+            bullet = Instantiate(bulletPrefab,transform);
+        }
+        bullet.transform.SetParent(null);
+        return bullet;
 
-        return Instantiate(bulletPrefab,transform);
     }
 
 
     public void Return(GameObject bullet)
     {
         bullet.SetActive(false);
+        bullet.transform.SetParent(transform);
         pool.Enqueue(bullet);
     }
 

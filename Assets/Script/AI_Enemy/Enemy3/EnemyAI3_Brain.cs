@@ -270,12 +270,14 @@ public class EnemyAI3_Brain : MonoBehaviour
     // jeśli jestem w TickSuspicious i przestaje widziec gracza to wracam do patrolu
     private void TickSuspicious()
     {
-        
         if(!CanSeePlayer())
         {
             ChangeState(EnemyState.Search);
             return;
         }
+        
+        movement.FaceToTarget(vision.PlayerTransform.position); 
+        
         if(suspiciousDuration <= stateTimer)
         {
             ChangeState(EnemyState.Chase);
@@ -285,7 +287,7 @@ public class EnemyAI3_Brain : MonoBehaviour
 
     private void TickChase()
     {
-        if (combat.IsPlayerInAttackRange)
+        if (combat.IsPlayerInAttackRange && CanSeePlayer())
         {
             ChangeState(EnemyState.Attack);
             return;
@@ -293,6 +295,7 @@ public class EnemyAI3_Brain : MonoBehaviour
         if (CanSeePlayer())
         {
             movement.MoveTo(vision.PlayerTransform.position);
+            movement.FaceToTarget(vision.PlayerTransform.position);
         }
         else
         {
@@ -329,12 +332,13 @@ public class EnemyAI3_Brain : MonoBehaviour
     private void TickAttack()
     {
         // gracz wyszedł z zasięgu — wróć do Chase
-        if (!combat.IsPlayerInAttackRange)
+        if (!combat.IsPlayerInAttackRange || !CanSeePlayer())
         {
             ChangeState(EnemyState.Chase);
             return;
         }
 
+        movement.FaceToTarget(vision.PlayerTransform.position);
         // bij co attackCooldown sekund
         if (stateTimer >= attackCooldown)
         {

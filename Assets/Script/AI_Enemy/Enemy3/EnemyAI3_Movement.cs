@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,7 @@ public class EnemyAI3_Movement : MonoBehaviour
     [SerializeField] private float walkSpeed = 2;
     [SerializeField] private float runSpeed = 4;
     [SerializeField] private float waypointReachedThreshold = 0.15f;
+    [SerializeField] private float rotationSpeed = 6f;
     
     [Header("Random NavMeshSamples Setting")]
     [SerializeField] private float randomSearchRadius = 4f;
@@ -149,5 +151,16 @@ public class EnemyAI3_Movement : MonoBehaviour
 
     }
 
+    public void FaceToTarget(Vector3 targetPosition)
+    {
+        
+        Vector3 direction = targetPosition - transform.position;
+        direction.y = 0f;
+        if(direction.sqrMagnitude < 0.001f) return;
+        
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,Time.deltaTime * rotationSpeed);
+
+    }
 
 }
