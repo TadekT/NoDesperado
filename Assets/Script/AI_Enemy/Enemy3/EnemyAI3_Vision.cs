@@ -18,9 +18,6 @@ public class EnemyAI3_Vision : MonoBehaviour
     [SerializeField] private float scanInterval = 0.2f;
     
 
-
-    private int maxColliderSize = 10;
-    private Collider[] _hitColliders;
     private float scanTimer;
 
     public bool IsAlerted{get ; set ;}
@@ -31,7 +28,6 @@ public class EnemyAI3_Vision : MonoBehaviour
 
     private void Awake()
     {
-        _hitColliders = new Collider[maxColliderSize];
 
         if(eyes == null)
         {
@@ -58,40 +54,29 @@ public class EnemyAI3_Vision : MonoBehaviour
             return;
 
         scanTimer = scanInterval;
-        SphereScanForPlayer();
+        CheckPlayerVisibility ();
     }
 
-    #region Sphere Scan 
-    private void SphereScanForPlayer()
+    #region Check Player Visibility 
+    private void CheckPlayerVisibility ()
     {
-        // Physics.SyncTransforms();
-        
-        //przeszukanie w OverlapSphereNonAlloc poszukując playera przy pomocy playerLayer
-        int hits = Physics.OverlapSphereNonAlloc(
-            transform.position,
-            viewRadius ,
-            _hitColliders,
-            playerLayerMask,
-            QueryTriggerInteraction.Ignore
-            );
-        
+        if(playerTransform == null) return;
 
-        for(int i = 0; i < hits; i++)
+        if (IsTargetVisible(playerTransform))
         {
-            Transform candidate = _hitColliders[i].transform;
-
-            if (IsTargetVisible(candidate))
-            {
-                CanSeePlayer = true;
-                PlayerTransform = candidate;
-                LastKnownPlayerPosition = candidate.position;
-                return;
-            }
-
+            CanSeePlayer = true;
+            PlayerTransform = playerTransform;
+            LastKnownPlayerPosition = playerTransform.position;
+            return;
         }
+        else
+        {
 
         CanSeePlayer = false;
         PlayerTransform = null;
+            
+        }
+        
 
     }
 #endregion
@@ -149,8 +134,6 @@ public class EnemyAI3_Vision : MonoBehaviour
 #region OnDrawGizmos
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position,viewRadius);
 
         Transform eyeRef = (eyes != null) ? eyes : transform;
         Vector3 forward = eyeRef.forward * viewRadius;
