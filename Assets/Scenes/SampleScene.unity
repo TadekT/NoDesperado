@@ -1733,6 +1733,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1622323682733734135, guid: 56e024ae2faf0784eb3698defebe26f4,
+        type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 6152012165266093810, guid: 35686092ac78fd8428d0281c6ec67f82,
+        type: 3}
     - target: {fileID: 3484672551802733971, guid: 56e024ae2faf0784eb3698defebe26f4,
         type: 3}
       propertyPath: m_Name
@@ -1797,16 +1803,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7807825039260644581, guid: 56e024ae2faf0784eb3698defebe26f4,
-        type: 3}
-      propertyPath: triggerState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8490052788441161823, guid: 56e024ae2faf0784eb3698defebe26f4,
-        type: 3}
-      propertyPath: triggerState
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
