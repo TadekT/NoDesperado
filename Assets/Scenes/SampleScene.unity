@@ -1208,13 +1208,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 752080220}
+  m_Father: {fileID: 1924832626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.169983, y: -2.7068787}
-  m_SizeDelta: {x: 250, y: 19.6686}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 2, y: 0}
+  m_SizeDelta: {x: 250, y: 20}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &664641604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1271,6 +1271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ef58af03c6e5d40b66c9799981a016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 1924832629}
   maxHealth: 100
   currentHealth: 0
 --- !u!1 &752080219
@@ -1305,7 +1306,6 @@ RectTransform:
   m_Children:
   - {fileID: 269634339}
   - {fileID: 1924832626}
-  - {fileID: 664641603}
   m_Father: {fileID: 1884882506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2075,6 +2075,7 @@ GameObject:
   - component: {fileID: 1924832626}
   - component: {fileID: 1924832628}
   - component: {fileID: 1924832627}
+  - component: {fileID: 1924832629}
   m_Layer: 0
   m_Name: DownHealthVisual
   m_TagString: Untagged
@@ -2093,13 +2094,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 664641603}
   m_Father: {fileID: 752080220}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -2.169983, y: -2.7068787}
-  m_SizeDelta: {x: 253, y: 25}
+  m_SizeDelta: {x: 254, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1924832627
 MonoBehaviour:
@@ -2139,6 +2141,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924832625}
   m_CullTransparentMesh: 1
+--- !u!114 &1924832629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924832625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95eafe49d1f35e24ab135e0410a018ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
+  MaxHealth: 0
+  Width: 250
+  Height: 20
+  healthBar: {fileID: 664641603}
 --- !u!1001 &1960769195
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour, IDamageable
 {
-
+    [SerializeField] private HealthBarUI healthBar;
     [SerializeField] private int maxHealth = 100; 
 
 
@@ -16,6 +16,7 @@ public class PlayerStatus : MonoBehaviour, IDamageable
     {
         
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
 
     }
 
@@ -24,6 +25,7 @@ public class PlayerStatus : MonoBehaviour, IDamageable
     public void TakeDamage(int amount)
     {
         currentHealth = Mathf.Max(0,currentHealth - amount);
+        healthBar.SetHealth(currentHealth);
 
         if (IsDead())
         {
