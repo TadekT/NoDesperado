@@ -1253,27 +1253,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664641602}
   m_CullTransparentMesh: 1
---- !u!1 &695823026 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 149814450509844229, guid: 5d786f20e22b950489c98827a5ff9dad,
-    type: 3}
-  m_PrefabInstance: {fileID: 5407966463688798844}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &695823034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695823026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18ef58af03c6e5d40b66c9799981a016, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1924832629}
-  maxHealth: 100
-  currentHealth: 0
 --- !u!1 &752080219
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,11 +2579,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 149814450509844229, guid: 5d786f20e22b950489c98827a5ff9dad,
+    - target: {fileID: 1783216979235436789, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1924832629}
     - target: {fileID: 5000035300019833414, guid: 5d786f20e22b950489c98827a5ff9dad,
         type: 3}
       propertyPath: _camera
@@ -2660,14 +2639,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7567339535654795084, guid: 5d786f20e22b950489c98827a5ff9dad,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 664641603}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 149814450509844229, guid: 5d786f20e22b950489c98827a5ff9dad,
-        type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 695823034}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d786f20e22b950489c98827a5ff9dad, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

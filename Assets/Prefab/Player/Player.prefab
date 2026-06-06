@@ -9,13 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6654789670785708183}
+  - component: {fileID: 1783216979235436789}
   - component: {fileID: 5000035300019833414}
   - component: {fileID: 5607752883704837905}
   - component: {fileID: 6146013060571651622}
   - component: {fileID: 1490142629098975208}
   - component: {fileID: 8460186988641502808}
   - component: {fileID: 3977898156041015563}
-  m_Layer: 0
+  - component: {fileID: 7567339535654795084}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -37,6 +39,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1783216979235436789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149814450509844229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ef58af03c6e5d40b66c9799981a016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 0
 --- !u!114 &5000035300019833414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,9 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c1a613ac5bc4c46b895c73c4b1bf06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouse_position: {x: 0, y: 0, z: 0}
-  mouse_world_position: {x: 0, y: 0, z: 0}
   agent: {fileID: 8460186988641502808}
+  _camera: {fileID: 0}
   groundlayer:
     serializedVersion: 2
     m_Bits: 8
@@ -177,3 +193,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &7567339535654795084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149814450509844229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95eafe49d1f35e24ab135e0410a018ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  Width: 250
+  Height: 50
+  healthBar: {fileID: 0}
