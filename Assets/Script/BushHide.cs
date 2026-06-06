@@ -10,7 +10,7 @@ public class BushHide : MonoBehaviour
         PlayerStatus status = other.GetComponent<PlayerStatus>();
         if(status != null)
         {
-            status.SetHiddne(true);
+            status.SetHidden(true);
         }
 
     }
@@ -22,7 +22,7 @@ public class BushHide : MonoBehaviour
         PlayerStatus status = other.GetComponent<PlayerStatus>();
         if(status != null)
         {
-            status.SetHiddne(false);
+            status.SetHidden(false);
         }
 
     }

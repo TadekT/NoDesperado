@@ -46,7 +46,8 @@ public class BulletPool : MonoBehaviour
 
 
     public void Return(GameObject bullet)
-    {
+    {   
+        if(bullet == null) return;
         bullet.SetActive(false);
         bullet.transform.SetParent(transform);
         pool.Enqueue(bullet);

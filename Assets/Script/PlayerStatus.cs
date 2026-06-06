@@ -44,7 +44,7 @@ public class PlayerStatus : MonoBehaviour, IDamageable
         gameObject.SetActive(false);
     }
 
-    public void SetHiddne(bool hidden)
+    public void SetHidden(bool hidden)
     {
         IsHidden = hidden;
     }

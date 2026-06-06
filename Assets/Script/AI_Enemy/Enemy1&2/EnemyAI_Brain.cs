@@ -320,7 +320,10 @@ public class EnemyAI_Brain : MonoBehaviour
             }
             else
             {
-                movement.MoveToRandomPosition(lastKnownPosition);
+                if (lastKnownPosition != Vector3.zero)
+                {
+                    movement.MoveToRandomPosition(lastKnownPosition);
+                }
             }
         }
     }

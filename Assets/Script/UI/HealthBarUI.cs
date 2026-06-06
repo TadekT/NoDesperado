@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class HealthBarUI : MonoBehaviour
 {
 
-    public float Health;
-    public float MaxHealth;
-    public float Width;
-    public float Height;
+    public float Health =100;
+    public float MaxHealth = 100;
+    public float Width = 250;
+    public float Height = 50;
 
     [SerializeField] private RectTransform healthBar;
 
