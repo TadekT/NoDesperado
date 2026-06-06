@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float lifeTime = 3f;
     private AudioSource audioSource;
     private int damage;
+    private bool _returned = false;
     private BulletPool pool;
 
     private float timer;
@@ -19,6 +20,7 @@ public class Projectile : MonoBehaviour
         damage = damageAmoutn;
         pool = bulletPool;
         timer = 0;
+        _returned = false;
         audioSource = GetComponentInParent<AudioSource>();
         if (audioSource != null)
             audioSource.Play();
@@ -56,7 +58,9 @@ public class Projectile : MonoBehaviour
 
 
     private void ReturnToPool()
-    {
+    {   
+        if(_returned) return;
+        _returned = true; 
         pool.Return(gameObject);
     }
 

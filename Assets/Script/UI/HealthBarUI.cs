@@ -12,11 +12,12 @@ public class HealthBarUI : MonoBehaviour
 
     public void SetMaxHealth(float maxHealth)
     {
-        MaxHealth = maxHealth;
+         MaxHealth = Mathf.Max(1f, maxHealth);
     }
 
     public void SetHealth(float health)
-    {
+    {   
+        if (MaxHealth <= 0f || healthBar == null) return;
         Health = health;
         float x = Health / MaxHealth;
         float newWidth = x * Width;

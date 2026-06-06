@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,12 @@ public class BulletPool : MonoBehaviour
 
     private void Awake()
     {   
-        
+        if (bulletPrefab == null) 
+        {
+            Debug.LogError("[BulletPool] bulletPrefab nie przypisany!", this);
+            return; 
+        }
+
         for(int i = 0;i < poolSize; i++)
         {
             

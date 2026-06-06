@@ -32,23 +32,30 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {   
+        if(Mouse.current == null) return;
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            agent.SetDestination(getMouseWorldPosition());
+            if(TryGetMouseWorldPosition(out Vector3 target))
+            {
+                agent.SetDestination(target);
+            }
         }
     }
 
-    private Vector3 getMouseWorldPosition()
+    private bool TryGetMouseWorldPosition(out Vector3 position)
     {
         Vector3 mouse_position = Mouse.current.position.ReadValue();
         Ray ray = _camera.ScreenPointToRay(mouse_position);
+
         if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, groundlayer))
         {
-            //Debug.Log("Hit: " + hit.point);
-            return hit.point;
+            position = hit.point;
+            return true;
         }
 
-        return Vector3.zero;
+        position = Vector3.zero;
+        return false;
     }
 
 

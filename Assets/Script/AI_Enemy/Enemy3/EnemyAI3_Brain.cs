@@ -58,7 +58,7 @@ public class EnemyAI3_Brain : MonoBehaviour
 
     // ostatnia znana pozycja gracza, do urzytku w TickState chase
     private Vector3 lastKnownPosition; 
-
+    private Transform _cachedPlayerTransform;
     
     //Sprawdzanie poprawności przypisania referencji
     private void Awake()
@@ -109,12 +109,16 @@ public class EnemyAI3_Brain : MonoBehaviour
     
     private void UpdateVisionData()
     {
-        if (vision == null)
-            return;
+        if (vision == null) return;
 
         if (vision.CanSeePlayer && vision.PlayerTransform != null)
         {
             lastKnownPosition = vision.LastKnownPlayerPosition;
+            _cachedPlayerTransform = vision.PlayerTransform;
+        }
+        else
+        {
+            _cachedPlayerTransform = null;
         }
     }
 
@@ -276,7 +280,7 @@ public class EnemyAI3_Brain : MonoBehaviour
             return;
         }
         
-        movement.FaceToTarget(vision.PlayerTransform.position); 
+        movement.FaceToTarget(_cachedPlayerTransform.position); 
         
         if(suspiciousDuration <= stateTimer)
         {
@@ -294,8 +298,8 @@ public class EnemyAI3_Brain : MonoBehaviour
         }
         if (CanSeePlayer())
         {
-            movement.MoveTo(vision.PlayerTransform.position);
-            movement.FaceToTarget(vision.PlayerTransform.position);
+            movement.MoveTo(_cachedPlayerTransform.position);
+            movement.FaceToTarget(_cachedPlayerTransform.position);
         }
         else
         {
@@ -341,7 +345,7 @@ public class EnemyAI3_Brain : MonoBehaviour
             return;
         }
 
-        movement.FaceToTarget(vision.PlayerTransform.position);
+        movement.FaceToTarget(_cachedPlayerTransform.position);
         // bij co attackCooldown sekund
         if (stateTimer >= attackCooldown)
         {
@@ -354,7 +358,7 @@ public class EnemyAI3_Brain : MonoBehaviour
     {
         return vision != null &&
                vision.CanSeePlayer &&
-               vision.PlayerTransform != null;
+               _cachedPlayerTransform != null;
     }
 
 }

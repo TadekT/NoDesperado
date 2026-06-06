@@ -58,19 +58,23 @@ public class CameraController : MonoBehaviour
         
     private void HandleMovement()
     {
-
+        if (moveAction == null) return;
         Vector2 input = moveAction.action.ReadValue<Vector2>();
 
         Vector3 moveDirection = transform.forward * input.y + transform.right * input.x;
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
+    
     private void HandleRotation()
     {
+        if (rotateAction == null) return;
         float rotate = rotateAction.action.ReadValue<float>();
         transform.eulerAngles += new Vector3(0, rotate * rotateSpeed * Time.deltaTime , 0);
     }
+
     private void HandleZoom()
     {
+        if (zoomAction == null) return;
         float scroll = zoomAction.action.ReadValue<Vector2>().y;
 
         if (scroll > 0f) targetFollowOffset.y -= zoomAmount;

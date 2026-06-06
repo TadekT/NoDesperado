@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[RequireComponent(typeof(HealthBarUI))]
 public class PlayerStatus : MonoBehaviour, IDamageable
 {
     [SerializeField] private HealthBarUI healthBar;
@@ -15,8 +15,11 @@ public class PlayerStatus : MonoBehaviour, IDamageable
     void Awake()
     {
         
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = maxHealth;        
+        if(healthBar != null)
+        {
+        healthBar.SetMaxHealth(maxHealth);    
+        }
 
     }
 
@@ -25,7 +28,10 @@ public class PlayerStatus : MonoBehaviour, IDamageable
     public void TakeDamage(int amount)
     {
         currentHealth = Mathf.Max(0,currentHealth - amount);
-        healthBar.SetHealth(currentHealth);
+        if(healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
 
         if (IsDead())
         {
@@ -41,7 +47,9 @@ public class PlayerStatus : MonoBehaviour, IDamageable
     private void Die()
     {
         Debug.Log("Player is dead");
+        SetHidden(false);
         gameObject.SetActive(false);
+
     }
 
     public void SetHidden(bool hidden)
