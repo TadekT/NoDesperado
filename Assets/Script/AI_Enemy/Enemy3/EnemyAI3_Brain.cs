@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class EnemyAI3_Brain : MonoBehaviour
 {
-
+#region Variables
     public event Action<EnemyState,EnemyState> OnChangeState3;
 
     // prosty enum state trzymający wszystkie stany przeciwnika AI
@@ -59,7 +59,13 @@ public class EnemyAI3_Brain : MonoBehaviour
     // ostatnia znana pozycja gracza, do urzytku w TickState chase
     private Vector3 lastKnownPosition; 
     private Transform _cachedPlayerTransform;
-    
+#endregion
+
+
+
+
+
+#region Awake Method
     //Sprawdzanie poprawności przypisania referencji
     private void Awake()
     {
@@ -80,7 +86,13 @@ public class EnemyAI3_Brain : MonoBehaviour
         }
 
     }
+#endregion
 
+
+
+
+
+#region Start Method
     // Start, do wyjścia ze stanu EnemyState.None
     private void Start()
     {
@@ -95,8 +107,13 @@ public class EnemyAI3_Brain : MonoBehaviour
         }
         
     }
+#endregion
 
 
+
+
+
+#region Update Method
     private void Update()
     {
         stateTimer += Time.deltaTime;
@@ -105,8 +122,13 @@ public class EnemyAI3_Brain : MonoBehaviour
         TickState(currentState);
 
     }
+#endregion
     
-    
+
+
+
+
+#region UpdateVisionData Method
     private void UpdateVisionData()
     {
         if (vision == null) return;
@@ -121,7 +143,13 @@ public class EnemyAI3_Brain : MonoBehaviour
             _cachedPlayerTransform = null;
         }
     }
+#endregion
 
+
+
+
+
+#region ChangeState Method
     private void ChangeState(EnemyState nextState)
     {
         if(nextState == currentState) 
@@ -138,8 +166,13 @@ public class EnemyAI3_Brain : MonoBehaviour
         OnChangeState3?.Invoke(previousState,currentState);
         
     }
+#endregion
     
-    
+
+
+
+
+#region TickState Method
     private void TickState(EnemyState state)
     {
         switch (state)
@@ -170,7 +203,11 @@ public class EnemyAI3_Brain : MonoBehaviour
 
         }        
     }
+#endregion
 
+
+
+#region EnterState Method
     //Metoda do wchodzenia / rozpoczynania stanów 
     //Ma ona wywołac konkretną funkcje zachodząco podczas sprecyzowanego stanu
     private void EnterState(EnemyState state)
@@ -215,7 +252,13 @@ public class EnemyAI3_Brain : MonoBehaviour
                 break;
         }
     }
+#endregion
 
+
+
+
+
+#region ExitState Method
     //Metoda do wychodzenia / zamykania konkretnych statów
     //jeśli będzie potrzeba to musi wyłączyć konkretną akcje 
     // np: mogło by wyłączyć animacje idle / albo animacje walk itp
@@ -233,7 +276,13 @@ public class EnemyAI3_Brain : MonoBehaviour
                 break;
         }
     }
+#endregion
 
+
+
+
+
+#region TickIdle Method
     // co sie tu dzieje :
     // jeśli jestem w TickIdle to: odliczam timer a potem patrol
     private void TickIdle()
@@ -245,9 +294,13 @@ public class EnemyAI3_Brain : MonoBehaviour
             ChangeState(EnemyState.Patrol);
         }
     }
+#endregion
 
-    // co sie tu dzieje :
-    // jeśli jestem w TickPatrol() to:
+
+
+
+
+#region TickPatrol Method
     private void TickPatrol()
     {
         //widze gracz , przechodze TickSuspicious 
@@ -269,9 +322,15 @@ public class EnemyAI3_Brain : MonoBehaviour
             ChangeState(EnemyState.Idle);
         }
     }
+#endregion
 
     // co sie tu dzieje :
     // jeśli jestem w TickSuspicious i przestaje widziec gracza to wracam do patrolu
+
+
+
+
+#region TickSuspicious Method
     private void TickSuspicious()
     {
         if(!CanSeePlayer())
@@ -288,7 +347,12 @@ public class EnemyAI3_Brain : MonoBehaviour
         }
         
     }
+#endregion
 
+
+
+
+#region TickChase Method
     private void TickChase()
     {
         if (combat.IsPlayerInAttackRange && CanSeePlayer())
@@ -310,6 +374,13 @@ public class EnemyAI3_Brain : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+
+
+
+#region TickSearch Method
 
     private void TickSearch()
     {       
@@ -335,7 +406,12 @@ public class EnemyAI3_Brain : MonoBehaviour
             }
         }
     }
+#endregion
 
+
+
+
+#region TickAttack Method
     private void TickAttack()
     {
         // gracz wyszedł z zasięgu — wróć do Chase
@@ -353,12 +429,19 @@ public class EnemyAI3_Brain : MonoBehaviour
             stateTimer = 0f;
         }
     }
+#endregion
 
+
+
+
+
+#region CanSeePlayer Method
     private bool CanSeePlayer()
     {
         return vision != null &&
                vision.CanSeePlayer &&
                _cachedPlayerTransform != null;
     }
+#endregion
 
 }

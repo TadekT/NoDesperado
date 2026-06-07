@@ -6,6 +6,7 @@ public class EnemyAI3_Combat : MonoBehaviour
     [SerializeField] private OnTriggerEnterCombatDetection combatTrigger;
     [SerializeField] private int damage = 10;
 
+    [SerializeField] private AudioSource shootAudio;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private GameObject bulletPrefab;
     private BulletPool bulletPool;
@@ -19,7 +20,6 @@ public class EnemyAI3_Combat : MonoBehaviour
     private float reloadTimer = 0f;
 
     private IDamageable currentTarget;
-
     public bool IsPlayerInAttackRange => currentTarget!= null;
     public bool IsReloading => isReloading;
 
@@ -36,6 +36,10 @@ public class EnemyAI3_Combat : MonoBehaviour
         if(combatTrigger == null)
         {
             combatTrigger = GetComponentInChildren<OnTriggerEnterCombatDetection>();
+        }
+        if(shootAudio == null)
+        {
+            shootAudio = GetComponentInChildren<AudioSource>();
         }
     }
 
@@ -107,7 +111,9 @@ public class EnemyAI3_Combat : MonoBehaviour
         Projectile projectile = bullet.GetComponent<Projectile>();
         if (projectile != null)
             projectile.Init(damage, bulletPool);
- 
+        
+        PlayShootSound();
+
         currentAmmo--;
  
         // Sprawdzamy po strzale czy magazynek jest pusty
@@ -115,6 +121,14 @@ public class EnemyAI3_Combat : MonoBehaviour
         {
             isReloading = true;
             reloadTimer = 0f;
+        }
+    }
+
+    private void PlayShootSound()
+    {
+        if(shootAudio != null)
+        {
+            shootAudio.PlayOneShot(shootAudio.clip);
         }
     }
 
