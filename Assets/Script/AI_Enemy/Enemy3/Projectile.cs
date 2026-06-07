@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -7,7 +6,6 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 3f;
-    private AudioSource audioSource;
     private int damage;
     private bool _returned = false;
     private BulletPool pool;
@@ -21,9 +19,7 @@ public class Projectile : MonoBehaviour
         pool = bulletPool;
         timer = 0;
         _returned = false;
-        audioSource = GetComponentInParent<AudioSource>();
-        if (audioSource != null)
-            audioSource.Play();
+
     }
 
     private void Update()
