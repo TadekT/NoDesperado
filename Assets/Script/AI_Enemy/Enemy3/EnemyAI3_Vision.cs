@@ -25,6 +25,7 @@ public class EnemyAI3_Vision : MonoBehaviour
     public Transform PlayerTransform { get; private set; }
     public Vector3 LastKnownPlayerPosition { get; private set; }
 
+    public LayerMask ObstacleLayerMask => obstacleLayerMask;
 
     private void Awake()
     {
