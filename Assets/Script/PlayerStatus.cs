@@ -46,10 +46,9 @@ public class PlayerStatus : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        Debug.Log("Player is dead");
         SetHidden(false);
         gameObject.SetActive(false);
-
+        GameManager.Instance.GameOver();
     }
 
     public void SetHidden(bool hidden)
