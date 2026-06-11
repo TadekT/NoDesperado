@@ -82,10 +82,23 @@ public class FieldOfViewMesh : MonoBehaviour
         currentColor = calmColor;
         targetColor = calmColor;
         materialInstance.SetColor(colorPropId, currentColor);
+
+        meshRenderer.enabled = false;
+    }
+
+    public void TogglePreview()
+    {
+        meshRenderer.enabled = !meshRenderer.enabled;
+    }
+
+    public void SetPreviewVisible(bool visible)
+    {
+        meshRenderer.enabled = visible;
     }
 
     private void LateUpdate()
     {
+        if (!meshRenderer.enabled) return;
         DrawFieldOfView();
         UpdateColor();
     }

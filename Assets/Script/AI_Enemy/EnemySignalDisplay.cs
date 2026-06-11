@@ -6,7 +6,7 @@ public class EnemySignalDisplay : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private AudioSource audioSource;
 
-    [Header("Który stan pokazuje ten sygnał?")]
+    [Header("Trigger State")]
     [SerializeField] private EnemyAI_Brain.EnemyState triggerState;
 
     private bool hasPlayedSound = false;
