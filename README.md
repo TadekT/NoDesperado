@@ -45,7 +45,7 @@ Kolor stożka informuje o stanie przeciwnika:
 
 ## Technologie
 
-- Unity 6
+- Unity 2022.3
 - Unity Input System (nowy)
 - NavMesh (poruszanie AI i gracza)
 - TextMeshPro
