@@ -33,7 +33,11 @@ public class EnemyFOVClickInspector : MonoBehaviour
 
         FieldOfViewMesh fov = hit.collider.GetComponentInParent<FieldOfViewMesh>();
         if (fov == null)
-            fov = hit.collider.transform.root.GetComponentInChildren<FieldOfViewMesh>();
+        {
+            EnemyAI3_Brain brain = hit.collider.GetComponentInParent<EnemyAI3_Brain>();
+            if (brain != null)
+                fov = brain.GetComponentInChildren<FieldOfViewMesh>();
+        }
 
         if (fov != null)
             fov.TogglePreview();
