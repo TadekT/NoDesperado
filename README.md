@@ -14,7 +14,10 @@ Gra skradankowa inspirowana Desperados 3, stworzona w Unity. Gracz steruje posta
 | Akcja | Przycisk |
 |---|---|
 | Ruch postaci | LPM (klik w cel) |
-| Podgląd stożka widzenia przeciwnika | ALT + LPM (klik na przeciwnika) |
+| Podgląd stożka widzenia przeciwnika | ALT + PPM (klik na przeciwnika) |
+| Przesuwanie kamery | W / A / S / D |
+| Obracanie kamery | Q / E |
+| Zoom kamery | Scroll myszy |
 
 ## AI Przeciwnika
 
@@ -33,7 +36,7 @@ Przeciwnik traci gracza z pola widzenia jeśli gracz schowa się w krzakach.
 
 ## Podgląd pola widzenia (FOV)
 
-Przytrzymaj **ALT** i kliknij LPM na wybranego przeciwnika, aby przełączyć widoczność jego stożka widzenia. Każdy przeciwnik działa niezależnie — można podejrzeć wielu naraz.
+Przytrzymaj **ALT** i kliknij PPM na wybranego przeciwnika, aby przełączyć widoczność jego stożka widzenia. Każdy przeciwnik działa niezależnie — można podejrzeć wielu naraz.
 
 Kolor stożka informuje o stanie przeciwnika:
 - Zielony — spokojny (Patrol / Idle)
